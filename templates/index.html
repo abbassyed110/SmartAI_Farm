@@ -33,56 +33,100 @@
         </div>
         <div class="col-lg-6 mt-4 mt-lg-0 text-center">
             <svg width="100%" height="300" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
-                <!-- Landscape background -->
-                <rect x="0" y="250" width="800" height="350" fill="#8bc34a" />
-                <rect x="0" y="0" width="800" height="250" fill="#87ceeb" />
+                <!-- Sky and Ground Background -->
+                <rect x="0" y="0" width="800" height="350" fill="#87CEEB" /> <!-- Sky -->
+                <rect x="0" y="350" width="800" height="250" fill="#689F38" /> <!-- Ground -->
                 
-                <!-- Sun -->
-                <circle cx="650" cy="120" r="60" fill="#ffd600" />
-                <circle cx="650" cy="120" r="70" fill="#ffd600" opacity="0.3" />
+                <!-- Sun with Rays -->
+                <circle cx="700" cy="100" r="50" fill="#FFD600" />
+                <circle cx="700" cy="100" r="60" fill="#FFD600" opacity="0.3" />
+                <!-- Sun rays -->
+                <line x1="700" y1="30" x2="700" y2="10" stroke="#FFD600" stroke-width="3" />
+                <line x1="770" y1="100" x2="790" y2="100" stroke="#FFD600" stroke-width="3" />
+                <line x1="700" y1="170" x2="700" y2="190" stroke="#FFD600" stroke-width="3" />
+                <line x1="630" y1="100" x2="610" y2="100" stroke="#FFD600" stroke-width="3" />
+                <line x1="650" y1="50" x2="630" y2="30" stroke="#FFD600" stroke-width="3" />
+                <line x1="750" y1="50" x2="770" y2="30" stroke="#FFD600" stroke-width="3" />
+                <line x1="750" y1="150" x2="770" y2="170" stroke="#FFD600" stroke-width="3" />
+                <line x1="650" y1="150" x2="630" y2="170" stroke="#FFD600" stroke-width="3" />
+
+                <!-- Digital Farm Fields with Grid Pattern -->
+                <rect x="50" y="380" width="700" height="150" fill="#8BC34A" stroke="#33691E" stroke-width="2" />
                 
-                <!-- Mountains -->
-                <polygon points="0,250 200,100 400,200 600,50 800,250" fill="#5d4037" />
+                <!-- Digital Grid Lines -->
+                <line x1="100" y1="380" x2="100" y2="530" stroke="#33691E" stroke-width="1" />
+                <line x1="150" y1="380" x2="150" y2="530" stroke="#33691E" stroke-width="1" />
+                <line x1="200" y1="380" x2="200" y2="530" stroke="#33691E" stroke-width="1" />
+                <line x1="250" y1="380" x2="250" y2="530" stroke="#33691E" stroke-width="1" />
+                <line x1="300" y1="380" x2="300" y2="530" stroke="#33691E" stroke-width="1" />
+                <line x1="350" y1="380" x2="350" y2="530" stroke="#33691E" stroke-width="1" />
+                <line x1="400" y1="380" x2="400" y2="530" stroke="#33691E" stroke-width="1" />
+                <line x1="450" y1="380" x2="450" y2="530" stroke="#33691E" stroke-width="1" />
+                <line x1="500" y1="380" x2="500" y2="530" stroke="#33691E" stroke-width="1" />
+                <line x1="550" y1="380" x2="550" y2="530" stroke="#33691E" stroke-width="1" />
+                <line x1="600" y1="380" x2="600" y2="530" stroke="#33691E" stroke-width="1" />
+                <line x1="650" y1="380" x2="650" y2="530" stroke="#33691E" stroke-width="1" />
+                <line x1="700" y1="380" x2="700" y2="530" stroke="#33691E" stroke-width="1" />
                 
-                <!-- Fields -->
-                <rect x="50" y="300" width="300" height="150" fill="#8bc34a" stroke="#33691e" stroke-width="5" />
-                <rect x="450" y="300" width="300" height="150" fill="#8bc34a" stroke="#33691e" stroke-width="5" />
+                <line x1="50" y1="430" x2="750" y2="430" stroke="#33691E" stroke-width="1" />
+                <line x1="50" y1="480" x2="750" y2="480" stroke="#33691E" stroke-width="1" />
                 
-                <!-- Crop rows -->
-                <line x1="80" y1="300" x2="80" y2="450" stroke="#33691e" stroke-width="3" />
-                <line x1="120" y1="300" x2="120" y2="450" stroke="#33691e" stroke-width="3" />
-                <line x1="160" y1="300" x2="160" y2="450" stroke="#33691e" stroke-width="3" />
-                <line x1="200" y1="300" x2="200" y2="450" stroke="#33691e" stroke-width="3" />
-                <line x1="240" y1="300" x2="240" y2="450" stroke="#33691e" stroke-width="3" />
-                <line x1="280" y1="300" x2="280" y2="450" stroke="#33691e" stroke-width="3" />
-                <line x1="320" y1="300" x2="320" y2="450" stroke="#33691e" stroke-width="3" />
+                <!-- Drone -->
+                <rect x="300" y="180" width="60" height="15" fill="#424242" rx="2" ry="2" />
+                <circle cx="330" cy="172" r="10" fill="#616161" />
+                <rect x="260" y="182" width="15" height="3" fill="#424242" />
+                <rect x="385" y="182" width="15" height="3" fill="#424242" />
+                <circle cx="260" cy="182" r="8" fill="#9E9E9E" />
+                <circle cx="400" cy="182" r="8" fill="#9E9E9E" />
+                <circle cx="270" cy="182" r="12" fill="#BDBDBD" opacity="0.7" />
+                <circle cx="390" cy="182" r="12" fill="#BDBDBD" opacity="0.7" />
                 
-                <line x1="480" y1="300" x2="480" y2="450" stroke="#33691e" stroke-width="3" />
-                <line x1="520" y1="300" x2="520" y2="450" stroke="#33691e" stroke-width="3" />
-                <line x1="560" y1="300" x2="560" y2="450" stroke="#33691e" stroke-width="3" />
-                <line x1="600" y1="300" x2="600" y2="450" stroke="#33691e" stroke-width="3" />
-                <line x1="640" y1="300" x2="640" y2="450" stroke="#33691e" stroke-width="3" />
-                <line x1="680" y1="300" x2="680" y2="450" stroke="#33691e" stroke-width="3" />
-                <line x1="720" y1="300" x2="720" y2="450" stroke="#33691e" stroke-width="3" />
+                <!-- Data Streams & Digital Elements -->
+                <path d="M330 195 L330 350" stroke="#2196F3" stroke-width="2" stroke-dasharray="5,5" />
+                <path d="M330 350 L200 450" stroke="#2196F3" stroke-width="2" stroke-dasharray="5,5" />
+                <path d="M330 350 L500 450" stroke="#2196F3" stroke-width="2" stroke-dasharray="5,5" />
                 
-                <!-- Farmer with technology -->
-                <circle cx="400" cy="350" r="30" fill="#795548" /> <!-- head -->
-                <rect x="385" y="380" width="30" height="70" fill="#1b5e20" /> <!-- body -->
-                <rect x="370" y="400" width="15" height="40" fill="#1b5e20" transform="rotate(20, 370, 400)" /> <!-- left arm -->
-                <rect x="415" y="400" width="15" height="40" fill="#1b5e20" transform="rotate(-20, 415, 400)" /> <!-- right arm -->
-                <rect x="385" y="450" width="15" height="50" fill="#5d4037" /> <!-- left leg -->
-                <rect x="400" y="450" width="15" height="50" fill="#5d4037" /> <!-- right leg -->
+                <!-- Data Points on Fields -->
+                <circle cx="200" cy="450" r="10" fill="#2196F3" opacity="0.7" />
+                <circle cx="350" cy="420" r="10" fill="#2196F3" opacity="0.7" />
+                <circle cx="500" cy="450" r="10" fill="#2196F3" opacity="0.7" />
+                <circle cx="650" cy="420" r="10" fill="#2196F3" opacity="0.7" />
                 
-                <!-- Mobile device -->
-                <rect x="425" y="390" width="25" height="40" fill="#f5f5f5" stroke="#212121" stroke-width="2" />
+                <!-- Farmer with Tablet -->
+                <circle cx="600" cy="300" r="25" fill="#795548" /> <!-- head -->
+                <rect x="585" y="325" width="30" height="60" fill="#1B5E20" /> <!-- body -->
+                <rect x="570" y="335" width="15" height="35" fill="#1B5E20" transform="rotate(20, 570, 335)" /> <!-- left arm -->
+                <rect x="615" y="335" width="15" height="40" fill="#1B5E20" transform="rotate(-20, 615, 335)" /> <!-- right arm -->
+                <rect x="585" y="385" width="15" height="50" fill="#5D4037" /> <!-- left leg -->
+                <rect x="600" y="385" width="15" height="50" fill="#5D4037" /> <!-- right leg -->
                 
-                <!-- Cloud with AI symbol -->
-                <circle cx="200" cy="100" r="40" fill="white" />
-                <circle cx="240" cy="90" r="40" fill="white" />
-                <circle cx="280" cy="100" r="40" fill="white" />
-                <circle cx="220" cy="130" r="40" fill="white" />
-                <circle cx="260" cy="130" r="40" fill="white" />
-                <text x="240" y="115" font-family="Arial" font-size="30" text-anchor="middle" fill="#4caf50">AI</text>
+                <!-- Tablet in Hands -->
+                <rect x="630" y="330" width="30" height="40" fill="#F5F5F5" stroke="#212121" stroke-width="2" rx="2" ry="2" />
+                <rect x="635" y="335" width="20" height="30" fill="#0D47A1" /> <!-- screen -->
+                
+                <!-- AI Brain Hub/Cloud -->
+                <circle cx="150" cy="150" r="50" fill="#F5F5F5" stroke="#9C27B0" stroke-width="2" />
+                
+                <!-- Neural Network Lines -->
+                <path d="M150 150 L330 172" stroke="#9C27B0" stroke-width="2" stroke-dasharray="5,5" />
+                <path d="M150 150 L600 300" stroke="#9C27B0" stroke-width="2" stroke-dasharray="5,5" />
+                
+                <!-- AI Text in Hub -->
+                <text x="150" y="155" font-family="Arial" font-size="20" text-anchor="middle" fill="#9C27B0" font-weight="bold">AI</text>
+                
+                <!-- Digital Data Points Inside Hub -->
+                <circle cx="130" cy="130" r="5" fill="#9C27B0" />
+                <circle cx="170" cy="130" r="5" fill="#9C27B0" />
+                <circle cx="130" cy="170" r="5" fill="#9C27B0" />
+                <circle cx="170" cy="170" r="5" fill="#9C27B0" />
+                
+                <!-- Connecting Lines Inside Hub -->
+                <line x1="130" y1="130" x2="170" y2="130" stroke="#9C27B0" stroke-width="1.5" />
+                <line x1="130" y1="130" x2="130" y2="170" stroke="#9C27B0" stroke-width="1.5" />
+                <line x1="170" y1="130" x2="170" y2="170" stroke="#9C27B0" stroke-width="1.5" />
+                <line x1="130" y1="170" x2="170" y2="170" stroke="#9C27B0" stroke-width="1.5" />
+                <line x1="130" y1="130" x2="170" y2="170" stroke="#9C27B0" stroke-width="1.5" />
+                <line x1="170" y1="130" x2="130" y2="170" stroke="#9C27B0" stroke-width="1.5" />
             </svg>
         </div>
     </div>
