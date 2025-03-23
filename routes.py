@@ -119,7 +119,21 @@ def set_language(lang):
 @login_required
 def dashboard():
     # Get user's crops
-    user_crops = FarmerCrop.query.filter_by(user_id=current_user.id).all()
+    user_crops_query = FarmerCrop.query.filter_by(user_id=current_user.id).all()
+    
+    # Convert SQLAlchemy objects to dictionaries for JSON serialization
+    user_crops = []
+    for crop in user_crops_query:
+        user_crops.append({
+            'id': crop.id,
+            'crop_name': crop.crop_name,
+            'planting_date': format_date(crop.planting_date) if crop.planting_date else None,
+            'expected_harvest_date': format_date(crop.expected_harvest_date) if crop.expected_harvest_date else None,
+            'area_planted': crop.area_planted,
+            'status': crop.status,
+            'notes': crop.notes,
+            'created_at': format_date(crop.created_at) if crop.created_at else None
+        })
     
     # Get weather data for user's location
     weather_data = None
@@ -127,10 +141,33 @@ def dashboard():
         weather_data = get_weather_data(current_user.farm_latitude, current_user.farm_longitude)
     
     # Get user's active marketplace listings
-    listings = MarketplaceListing.query.filter_by(user_id=current_user.id, is_active=True).all()
+    listings_query = MarketplaceListing.query.filter_by(user_id=current_user.id, is_active=True).all()
+    listings = []
+    for listing in listings_query:
+        listings.append({
+            'id': listing.id,
+            'crop_name': listing.crop_name,
+            'quantity': listing.quantity,
+            'unit': listing.unit,
+            'price_per_unit': listing.price_per_unit,
+            'description': listing.description,
+            'location': listing.location,
+            'created_at': format_date(listing.created_at) if listing.created_at else None
+        })
     
     # Get user's unread weather alerts
-    alerts = WeatherAlert.query.filter_by(user_id=current_user.id, is_read=False).all()
+    alerts_query = WeatherAlert.query.filter_by(user_id=current_user.id, is_read=False).all()
+    alerts = []
+    for alert in alerts_query:
+        alerts.append({
+            'id': alert.id,
+            'alert_type': alert.alert_type,
+            'alert_message': alert.alert_message,
+            'severity': alert.severity,
+            'start_date': format_date(alert.start_date) if alert.start_date else None,
+            'end_date': format_date(alert.end_date) if alert.end_date else None,
+            'created_at': format_date(alert.created_at) if alert.created_at else None
+        })
     
     return render_template(
         'dashboard.html',
