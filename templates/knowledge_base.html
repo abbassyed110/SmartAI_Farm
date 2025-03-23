@@ -92,9 +92,9 @@
         </div>
         
         <div class="category-pills">
-            <a href="#" class="category-pill {% if current_category == 'all' %}active{% endif %}" data-category="all">All Categories</a>
+            <a href="#" class="category-pill {% if current_category == 'all' %}active{% endif %} pulse" data-category="all">All Categories</a>
             {% for category in categories %}
-                <a href="#" class="category-pill {% if current_category == category %}active{% endif %}" data-category="{{ category }}">{{ category|title }}</a>
+                <a href="#" class="category-pill {% if current_category == category %}active{% endif %} fade-in" style="animation-delay: {{ loop.index * 0.1 }}s;" data-category="{{ category }}">{{ category|title }}</a>
             {% endfor %}
         </div>
         
@@ -124,7 +124,7 @@
             {% elif articles %}
                 <!-- Articles List View -->
                 {% for article in articles %}
-                    <div class="card article-card mb-4" data-article-id="{{ article.id }}" data-category="{{ article.category }}">
+                    <div class="card article-card mb-4 fade-in" style="animation-delay: {{ loop.index * 0.1 }}s;" data-article-id="{{ article.id }}" data-category="{{ article.category }}">
                         <div class="card-body">
                             <h3 class="card-title">{{ article.title }}</h3>
                             <div class="article-meta">

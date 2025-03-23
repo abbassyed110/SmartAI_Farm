@@ -82,16 +82,16 @@
 <!-- Farm Overview Stats -->
 <div class="row mb-4">
     <div class="col-md-3 col-sm-6 mb-3">
-        <div class="card h-100">
+        <div class="card h-100 fade-in" style="animation-delay: 0.1s;">
             <div class="card-body stats-card">
-                <i class="fas fa-seedling stats-icon"></i>
+                <i class="fas fa-seedling stats-icon pulse"></i>
                 <h3 data-i18n="crops">My Crops</h3>
                 <div class="stats-value">{{ crops|length }}</div>
             </div>
         </div>
     </div>
     <div class="col-md-3 col-sm-6 mb-3">
-        <div class="card h-100">
+        <div class="card h-100 fade-in" style="animation-delay: 0.2s;">
             <div class="card-body stats-card">
                 <i class="fas fa-temperature-high stats-icon"></i>
                 <h3 data-i18n="temperature">Temperature</h3>
@@ -106,7 +106,7 @@
         </div>
     </div>
     <div class="col-md-3 col-sm-6 mb-3">
-        <div class="card h-100">
+        <div class="card h-100 fade-in" style="animation-delay: 0.3s;">
             <div class="card-body stats-card">
                 <i class="fas fa-store stats-icon"></i>
                 <h3 data-i18n="active_listings">Active Listings</h3>
@@ -115,7 +115,7 @@
         </div>
     </div>
     <div class="col-md-3 col-sm-6 mb-3">
-        <div class="card h-100">
+        <div class="card h-100 fade-in" style="animation-delay: 0.4s;">
             <div class="card-body stats-card">
                 <i class="fas fa-exclamation-triangle stats-icon"></i>
                 <h3 data-i18n="weather_alerts">Weather Alerts</h3>
@@ -142,7 +142,7 @@
                         <div class="col-md-7">
                             <div class="crops-list">
                                 {% for crop in crops %}
-                                    <div class="card mb-3 crop-item status-{{ crop.status }}" data-crop-id="{{ crop.id }}">
+                                    <div class="card mb-3 crop-item status-{{ crop.status }} slide-in-right" style="animation-delay: {{ loop.index * 0.1 }}s;" data-crop-id="{{ crop.id }}">
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <h3 class="h5 mb-0">{{ crop.crop_name }}</h3>
@@ -271,11 +271,11 @@
             </div>
             <div class="card-body">
                 {% if weather and not weather.error %}
-                    <div class="weather-widget" id="current-weather-widget" data-weather="{{ weather|tojson }}">
+                    <div class="weather-widget fade-in" id="current-weather-widget" data-weather="{{ weather|tojson }}">
                         <div class="weather-icon">
                             <i class="fas fa-cloud fa-3x"></i>
                         </div>
-                        <div class="weather-temp">{{ weather.temperature|round|int }}°C</div>
+                        <div class="weather-temp pulse">{{ weather.temperature|round|int }}°C</div>
                         <div class="weather-desc text-capitalize">{{ weather.description }}</div>
                         <div class="weather-details mt-3">
                             <div class="row">
@@ -331,7 +331,7 @@
                 {% if alerts %}
                     <div class="alerts-list">
                         {% for alert in alerts %}
-                            <div class="card mb-3 alert-card severity-{{ alert.severity }}" data-alert-id="{{ alert.id }}">
+                            <div class="card mb-3 alert-card severity-{{ alert.severity }} slide-in-right" style="animation-delay: {{ loop.index * 0.1 }}s;" data-alert-id="{{ alert.id }}">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <h3 class="h5 mb-0">{{ alert.alert_type|replace('_', ' ')|title }}</h3>
@@ -371,22 +371,22 @@
             <div class="card-body">
                 <div class="row g-2">
                     <div class="col-6">
-                        <a href="{{ url_for('disease_detection') }}" class="btn btn-outline-primary w-100">
+                        <a href="{{ url_for('disease_detection') }}" class="btn btn-outline-primary w-100 grow">
                             <i class="fas fa-bug me-1"></i> Detect Disease
                         </a>
                     </div>
                     <div class="col-6">
-                        <a href="{{ url_for('crop_recommendation') }}" class="btn btn-outline-primary w-100">
+                        <a href="{{ url_for('crop_recommendation') }}" class="btn btn-outline-primary w-100 grow">
                             <i class="fas fa-seedling me-1"></i> Crop Advice
                         </a>
                     </div>
                     <div class="col-6 mt-2">
-                        <a href="{{ url_for('marketplace') }}" class="btn btn-outline-primary w-100">
+                        <a href="{{ url_for('marketplace') }}" class="btn btn-outline-primary w-100 grow">
                             <i class="fas fa-store me-1"></i> Marketplace
                         </a>
                     </div>
                     <div class="col-6 mt-2">
-                        <a href="{{ url_for('knowledge_base') }}" class="btn btn-outline-primary w-100">
+                        <a href="{{ url_for('knowledge_base') }}" class="btn btn-outline-primary w-100 grow">
                             <i class="fas fa-book me-1"></i> Knowledge
                         </a>
                     </div>
