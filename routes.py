@@ -192,9 +192,10 @@ def crop_recommendation():
             db.session.add(recommendation)
             db.session.commit()
             
+            # Pass the recommendation data directly, not as JSON
             return render_template(
                 'crop_recommendation.html',
-                recommended_crops=recommended_crops,
+                recommended_crops=recommended_crops,  # This is already a Python list of dicts
                 soil_type=soil_type,
                 ph_value=ph_value,
                 rainfall=rainfall,
@@ -208,6 +209,18 @@ def crop_recommendation():
     
     # Get user's previous recommendations
     previous_recommendations = CropRecommendation.query.filter_by(user_id=current_user.id).order_by(CropRecommendation.created_at.desc()).limit(5).all()
+    
+    # Pre-process recommendations to parse the JSON data
+    for recommendation in previous_recommendations:
+        try:
+            # Parse the JSON string into a Python object
+            if recommendation.recommended_crops:
+                recommendation.parsed_crops = json.loads(recommendation.recommended_crops)
+            else:
+                recommendation.parsed_crops = []
+        except Exception as e:
+            logger.error(f"Error parsing recommendation data: {str(e)}")
+            recommendation.parsed_crops = []
     
     return render_template('crop_recommendation.html', previous_recommendations=previous_recommendations)
 
