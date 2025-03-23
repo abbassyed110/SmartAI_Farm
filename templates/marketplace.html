@@ -100,7 +100,7 @@
             </div>
             <div class="card-body">
                 <form id="marketplace-filter-form">
-                    <div class="filter-section">
+                    <div class="filter-section fade-in" style="animation-delay: 0.1s;">
                         <label class="filter-title" for="filter-crop-type">Crop Type</label>
                         <select class="form-select" id="filter-crop-type">
                             <option value="all" selected>All Crops</option>
@@ -112,12 +112,12 @@
                         </select>
                     </div>
                     
-                    <div class="filter-section">
+                    <div class="filter-section fade-in" style="animation-delay: 0.2s;">
                         <label class="filter-title" for="filter-location">Location</label>
                         <input type="text" class="form-control" id="filter-location" placeholder="Enter location...">
                     </div>
                     
-                    <div class="filter-section">
+                    <div class="filter-section fade-in" style="animation-delay: 0.3s;">
                         <label class="filter-title">Price Range (₹)</label>
                         <div class="row">
                             <div class="col-6">
@@ -129,9 +129,9 @@
                         </div>
                     </div>
                     
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary">Apply Filters</button>
-                        <button type="button" class="btn btn-outline-secondary" id="reset-filters">Reset Filters</button>
+                    <div class="d-grid gap-2 fade-in" style="animation-delay: 0.4s;">
+                        <button type="submit" class="btn btn-primary grow">Apply Filters</button>
+                        <button type="button" class="btn btn-outline-secondary grow" id="reset-filters">Reset Filters</button>
                     </div>
                 </form>
             </div>
@@ -168,18 +168,18 @@
                 {% if listings %}
                     <div class="row g-4" id="marketplace-listings">
                         {% for listing in listings %}
-                            <div class="col-md-4 col-sm-6" 
+                            <div class="col-md-4 col-sm-6 fade-in" style="animation-delay: {{ loop.index * 0.1 }}s;"
                                 data-crop-type="{{ listing.crop_name }}" 
                                 data-location="{{ listing.location }}" 
                                 data-price="{{ listing.price_per_unit }}"
                                 data-date="{{ listing.created_at.isoformat() }}">
-                                <div class="card product-card">
+                                <div class="card product-card listing-card">
                                     <div class="product-img">
-                                        <i class="fas fa-seedling"></i>
+                                        <i class="fas fa-seedling weather-icon"></i>
                                     </div>
                                     <div class="card-body">
                                         <h3 class="card-title h5">{{ listing.crop_name }}</h3>
-                                        <div class="product-price mb-2">₹{{ listing.price_per_unit }}<small>/{{ listing.unit }}</small></div>
+                                        <div class="product-price mb-2 pulse">₹{{ listing.price_per_unit }}<small>/{{ listing.unit }}</small></div>
                                         <p class="card-text mb-1">
                                             <i class="fas fa-balance-scale me-1"></i> {{ listing.quantity }} {{ listing.unit }}
                                         </p>
