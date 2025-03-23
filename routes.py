@@ -22,6 +22,15 @@ logger = logging.getLogger(__name__)
 def inject_now():
     return {'now': datetime.now()}
 
+# Custom Jinja2 filters
+@app.template_filter('fromjson')
+def from_json(value):
+    """Convert a JSON string into a Python object"""
+    try:
+        return json.loads(value)
+    except (ValueError, TypeError):
+        return {}
+
 # Home route
 @app.route('/')
 def index():
