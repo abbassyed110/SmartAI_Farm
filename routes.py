@@ -10,7 +10,7 @@ from models import (
     User, FarmerCrop, MarketplaceListing, WeatherAlert, 
     DiseaseDiagnosis, CropRecommendation, KnowledgeArticle
 )
-from utils import get_weather_data, allowed_file
+from utils import get_weather_data, allowed_file, format_date
 from ml_models.crop_recommendation import predict_crop
 from ml_models.disease_identification import identify_disease
 from ml_models.weather_prediction import predict_weather_alerts

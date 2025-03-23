@@ -23,6 +23,7 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
     
     <!-- Manifest for PWA -->
     <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
@@ -143,7 +144,7 @@
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
-                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        <div class="alert alert-{{ category }} alert-dismissible fade show slide-in-bottom" role="alert">
                             {{ message }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
@@ -154,9 +155,9 @@
     </div>
     
     <!-- Main Content -->
-    <main class="container mt-4">
+    <main class="container mt-4 page-transition">
         {% if error %}
-            <div class="alert alert-danger">{{ error }}</div>
+            <div class="alert alert-danger shake">{{ error }}</div>
         {% endif %}
         
         {% block content %}{% endblock %}
