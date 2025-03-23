@@ -242,7 +242,7 @@
                                         <td>{{ listing.crop_name }}</td>
                                         <td>{{ listing.quantity }} {{ listing.unit }}</td>
                                         <td>₹{{ listing.price_per_unit }}/{{ listing.unit }}</td>
-                                        <td>{{ listing.created_at.strftime('%Y-%m-%d') }}</td>
+                                        <td>{{ listing.created_at }}</td>
                                         <td>
                                             <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#update-listing-modal-{{ listing.id }}">
                                                 <i class="fas fa-edit"></i>
@@ -341,9 +341,9 @@
                                     </div>
                                     <p class="mt-2 mb-0">{{ alert.alert_message }}</p>
                                     <div class="small text-muted mt-2">
-                                        <i class="fas fa-calendar-alt me-1"></i> {{ alert.start_date.strftime('%Y-%m-%d') }} 
+                                        <i class="fas fa-calendar-alt me-1"></i> {{ alert.start_date }} 
                                         {% if alert.end_date %}
-                                            to {{ alert.end_date.strftime('%Y-%m-%d') }}
+                                            to {{ alert.end_date }}
                                         {% endif %}
                                     </div>
                                 </div>

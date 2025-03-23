@@ -25,14 +25,17 @@ function initializeRecommendationForm() {
   const rangeInputs = document.querySelectorAll('.range-input');
   
   rangeInputs.forEach(input => {
-    const rangeValue = input.nextElementSibling;
-    if (rangeValue) {
+    // Find the corresponding value display element
+    const displayId = input.id + '-display';
+    const displayElement = document.getElementById(displayId);
+    
+    if (displayElement) {
       // Set initial value
-      rangeValue.textContent = input.value;
+      displayElement.textContent = input.value;
       
       // Update value when slider is moved
       input.addEventListener('input', function() {
-        rangeValue.textContent = this.value;
+        displayElement.textContent = this.value;
       });
     }
   });
