@@ -18,7 +18,7 @@ class Base(DeclarativeBase):
 db = SQLAlchemy(model_class=Base)
 # create the app
 app = Flask(__name__)
-app.secret_key = os.environ.get("SESSION_SECRET")
+app.secret_key = os.environ.get("SESSION_SECRET", "dev-secret-key")  # Add fallback for local dev
 
 # configure the database, relative to the app instance folder
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///agritech.db")
@@ -41,15 +41,17 @@ db.init_app(app)
 if not os.path.exists(app.config["UPLOAD_FOLDER"]):
     os.makedirs(app.config["UPLOAD_FOLDER"])
 
-with app.app_context():
-    # Make sure to import the models here or their tables won't be created
-    import models  # noqa: F401
-    db.create_all()
-
-# Import routes after db initialization to avoid circular imports
-from routes import *
-
+# Define user_loader before importing models
 @login_manager.user_loader
 def load_user(user_id):
+    # Import User here to avoid circular imports
     from models import User
     return User.query.get(int(user_id))
+
+with app.app_context():
+    # Import models AFTER db is defined but BEFORE create_all()
+    import models
+    db.create_all()
+    
+    # Import routes AFTER models are defined
+    import routes
