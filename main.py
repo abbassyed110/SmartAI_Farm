@@ -1,4 +1,5 @@
 from app import app
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+# This file is used by Replit to run the application
+# The app instance is imported from app.py
+# No additional code is needed here as the app is already configured
