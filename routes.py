@@ -11,13 +11,20 @@ logger = logging.getLogger(__name__)
 # Create Blueprint for modular usage
 bp = Blueprint('main', __name__)
 
-# Define the JSON converter function outside of decorators
+# Define the JSON functions for template filters
 def from_json(value):
     """Convert a JSON string into a Python object"""
     try:
         return json.loads(value)
     except (ValueError, TypeError):
         return {}
+
+def to_json(value):
+    """Convert a Python object to a JSON string"""
+    try:
+        return json.dumps(value)
+    except (ValueError, TypeError):
+        return '{}' 
 
 # Context processor to add variables to all templates
 def inject_now():
@@ -42,8 +49,9 @@ def setup_routes(app):
     # Register the context processor
     app.context_processor(inject_now)
     
-    # Register custom filter
+    # Register custom filters
     app.template_filter('fromjson')(from_json)
+    app.template_filter('tojson')(to_json)
     
     # Home route
     @app.route('/')
