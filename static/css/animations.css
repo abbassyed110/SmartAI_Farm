@@ -1,0 +1,313 @@
+/**
+ * AgriTech Platform - Animation Styles
+ * Contains all animations and transitions used throughout the application
+ */
+
+/* Page Transitions */
+.page-transition {
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+/* Shake Animation (for errors) */
+.shake {
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+/* Slide-in animations */
+.slide-in-bottom {
+    animation: slideInBottom 0.5s ease-out forwards;
+}
+
+/* Pulse Animation (for emphasis) */
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+/* Weather Widget Animations */
+.weather-icon {
+    animation: floatUpDown 3s ease-in-out infinite;
+}
+
+/* Card Hover Effects */
+.card.stats-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card.stats-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Button Hover Animations */
+.btn-primary, .btn-outline-primary {
+    transition: all 0.3s ease;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+.btn-primary:hover, .btn-outline-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Field Focus Animation */
+.form-control, .form-select {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    box-shadow: 0 0 0 0.2rem rgba(46, 125, 50, 0.25);
+    transform: translateY(-2px);
+}
+
+/* Fade In Animation for Content */
+.fade-in {
+    animation: fadeIn 1s ease-out forwards;
+}
+
+/* Slide In Animation for Lists */
+.slide-in-right {
+    animation: slideInRight 0.5s ease-out forwards;
+}
+
+/* Grow Animation */
+.grow {
+    transition: transform 0.3s ease;
+}
+
+.grow:hover {
+    transform: scale(1.05);
+}
+
+/* Badge Animation */
+.badge {
+    transition: all 0.3s ease;
+}
+
+.badge:hover {
+    transform: scale(1.2);
+}
+
+/* Animation for Progress Bars */
+.progress-bar {
+    transition: width 1s ease-in-out;
+}
+
+/* Marketplace Listing Animation */
+.listing-card {
+    transition: all 0.3s ease;
+}
+
+.listing-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo Animation */
+.navbar-brand {
+    transition: all 0.3s ease;
+}
+
+.navbar-brand:hover i {
+    animation: spin 2s ease infinite;
+}
+
+/* Navigation Link Animations */
+.nav-link {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.nav-link:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--primary-green);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover:after {
+    width: 100%;
+}
+
+/* Weather Alert Animation */
+.alert-card {
+    animation: slideInRight 0.5s ease-out forwards;
+}
+
+/* Knowledge Article Animation */
+.article-card {
+    transition: all 0.3s ease;
+}
+
+.article-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Dashboard Stats Icon Animation */
+.stats-icon {
+    transition: all 0.3s ease;
+}
+
+.stats-card:hover .stats-icon {
+    transform: scale(1.2);
+    color: var(--primary-dark);
+}
+
+/* Footer Link Animation */
+footer a {
+    transition: all 0.3s ease;
+}
+
+footer a:hover {
+    transform: translateX(5px);
+}
+
+/* Modal Animation */
+.modal-content {
+    animation: zoomIn 0.3s ease forwards;
+}
+
+/* Dropdown Menu Animation */
+.dropdown-menu {
+    animation: fadeInDown 0.3s ease forwards;
+}
+
+/* Tooltip Animation */
+[data-bs-toggle="tooltip"] {
+    animation: fadeIn 0.3s ease forwards;
+}
+
+/* CSS Keyframes Definitions */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInBottom {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes floatUpDown {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+    30%, 50%, 70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+    40%, 60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Responsive animations - reduce or disable on small screens */
+@media (max-width: 768px) {
+    .card.stats-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .weather-icon {
+        animation: floatUpDown 3s ease-in-out infinite;
+    }
+    
+    .btn-primary:hover, .btn-outline-primary:hover {
+        transform: translateY(-2px);
+    }
+}
