@@ -20,8 +20,17 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Backend URL (change to your deployed Flask URL)
-BACKEND_URL = "http://127.0.0.1:5000"
+# Backend URL configuration - for Streamlit Cloud deployment
+import os
+try:
+    # First try Streamlit secrets
+    BACKEND_URL = st.secrets.get("BACKEND_URL", "")
+except:
+    BACKEND_URL = ""
+
+# If not in secrets, check environment variable
+if not BACKEND_URL:
+    BACKEND_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:5000")
 
 # Session state for auth
 if "auth_token" not in st.session_state:
