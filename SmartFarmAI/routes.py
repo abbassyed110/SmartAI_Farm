@@ -186,7 +186,6 @@ def profile():
     if request.method == 'POST':
         current_user.full_name = request.form.get('full_name')
         current_user.phone = request.form.get('phone')
-        current_user.language_preference = request.form.get('language')
         current_user.farm_size = float(request.form.get('farm_size') or 0)
         current_user.farm_location = request.form.get('farm_location')
         
@@ -199,7 +198,7 @@ def profile():
         
         db.session.commit()
         flash('Profile updated successfully', 'success')
-        return redirect(url_for('profile'))
+        return redirect(url_for('routes.profile'))
     
     return render_template('profile.html')
 

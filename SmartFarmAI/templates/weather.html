@@ -104,6 +104,49 @@
         background-color: rgba(255, 255, 255, 0.6);
         border-radius: 50%;
     }
+    
+    /* Modal fixes - minimal overrides */
+    .modal-backdrop {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    
+    /* Force modal to be fully visible */
+    #update-location-modal {
+        display: none !important;
+        z-index: 1060 !important;
+    }
+    
+    #update-location-modal.show {
+        display: block !important;
+        overflow: auto !important;
+    }
+    
+    #update-location-modal .modal-dialog {
+        z-index: 1060 !important;
+    }
+    
+    #update-location-modal .modal-content {
+        background: white !important;
+        color: #212121 !important;
+        opacity: 1 !important;
+    }
+    
+    /* Ensure form inputs are visible and interactive */
+    #update-location-form input {
+        background: white !important;
+        color: #212121 !important;
+        border: 1px solid #ccc !important;
+        padding: 8px 12px !important;
+        width: 100% !important;
+    }
+    
+    #update-location-form input:focus {
+        outline: 2px solid var(--primary-green) !important;
+        background: white !important;
+        color: #212121 !important;
+    }
+
+
 </style>
 {% endblock %}
 
@@ -309,7 +352,7 @@
                 <h5 class="modal-title" id="update-location-modal-label"><span data-i18n="update_location">Update Farm Location</span></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="update-location-form" action="{{ url_for('profile') }}" method="post">
+            <form id="update-location-form" action="{{ url_for('routes.profile') }}" method="post">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="farm-location" class="form-label">Location Name (Village/Town)</label>

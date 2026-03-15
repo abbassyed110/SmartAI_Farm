@@ -311,6 +311,9 @@ document.addEventListener('DOMContentLoaded', function() {
       const latitude = document.getElementById('farm-latitude').value;
       const longitude = document.getElementById('farm-longitude').value;
       const location = document.getElementById('farm-location').value;
+      const fullName = document.querySelector('input[name="full_name"]') ? document.querySelector('input[name="full_name"]').value : '';
+      const phone = document.querySelector('input[name="phone"]') ? document.querySelector('input[name="phone"]').value : '';
+      const farmSize = document.querySelector('input[name="farm_size"]') ? document.querySelector('input[name="farm_size"]').value : '0';
       
       if (!latitude || !longitude || !location) {
         showNotification('Please fill in all location fields', 'warning');
@@ -330,41 +333,47 @@ document.addEventListener('DOMContentLoaded', function() {
         // Close the modal
         const modal = document.getElementById('update-location-modal');
         const modalInstance = bootstrap.Modal.getInstance(modal);
-        modalInstance.hide();
-        
+        if (modalInstance) {
+          modalInstance.hide();
+        }
         return;
       }
       
-      // Submit form data
-      fetch('/update_farm_location', {
+      // Submit form data via fetch to the profile endpoint
+      fetch('/profile', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: new URLSearchParams({
+          'full_name': fullName,
+          'phone': phone,
+          'farm_size': farmSize,
+          'farm_location': location,
           'farm_latitude': latitude,
-          'farm_longitude': longitude,
-          'farm_location': location
+          'farm_longitude': longitude
         })
       })
       .then(response => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error('Failed to update farm location');
         }
         return response.text();
       })
       .then(() => {
-        showNotification('Farm location updated successfully', 'success');
+        showNotification('Farm location updated successfully!', 'success');
         
         // Close the modal
         const modal = document.getElementById('update-location-modal');
         const modalInstance = bootstrap.Modal.getInstance(modal);
-        modalInstance.hide();
+        if (modalInstance) {
+          modalInstance.hide();
+        }
         
-        // Reload to get new weather data
+        // Reload page after short delay to show success message
         setTimeout(() => {
           window.location.reload();
-        }, 1000);
+        }, 1500);
       })
       .catch(error => {
         console.error('Error updating farm location:', error);
@@ -372,4 +381,33 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
   }
-});
+  
+  // Ensure modal is properly displayed when opened
+  const updateLocationModal = document.getElementById('update-location-modal');
+  if (updateLocationModal) {
+    updateLocationModal.addEventListener('show.bs.modal', function(e) {
+      console.log('Modal show event fired');
+      this.style.display = 'block';
+      this.style.zIndex = '1060';
+      this.setAttribute('aria-hidden', 'false');
+      
+      // Make sure backdrop is visible
+      const backdrop = document.querySelector('.modal-backdrop');
+      if (backdrop) {
+        backdrop.style.display = 'block';
+        backdrop.style.zIndex = '1050';
+      }
+    });
+    
+    updateLocationModal.addEventListener('shown.bs.modal', function(e) {
+      console.log('Modal shown event fired');
+      this.style.display = 'block';
+      this.style.opacity = '1';
+      this.style.visibility = 'visible';
+    });
+    
+    updateLocationModal.addEventListener('hidden.bs.modal', function(e) {
+      console.log('Modal hidden event fired');
+      this.setAttribute('aria-hidden', 'true');
+    });
+  }
