@@ -1,443 +1,292 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Smart Local Services Platform</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAP_KEY"></script>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
-<style>
-
-body{
-font-family:Arial;
-margin:0;
-background:#f4f6f9;
-}
-
-header{
-background:#0a2540;
-color:white;
-padding:15px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-button{
-padding:8px 12px;
-background:#0077b6;
-color:white;
-border:none;
-border-radius:5px;
-cursor:pointer;
-}
-
-.container{
-padding:20px;
-}
-
-.hidden{
-display:none;
-}
-
-#map{
-height:300px;
-margin-top:10px;
-}
-
-.card{
-background:white;
-padding:15px;
-margin:10px 0;
-border-radius:8px;
-box-shadow:0 2px 8px rgba(0,0,0,0.2);
-}
-
-img{
-width:100%;
-height:150px;
-object-fit:cover;
-border-radius:5px;
-}
-
-.rating{
-color:orange;
-}
-
-table{
-width:100%;
-border-collapse:collapse;
-}
-
-td,th{
-border:1px solid #ccc;
-padding:10px;
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartFarmAI - AI-Powered Agricultural Intelligence</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/animations.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        header {
+            background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        .hero-section {
+            background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+        .hero-section h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .hero-section p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+        }
+        .feature-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+        .feature-icon {
+            color: #1B5E20;
+            margin-bottom: 1rem;
+        }
+        .cta-button {
+            background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
+            border: none;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+        .cta-button:hover {
+            transform: scale(1.05);
+            color: white;
+        }
+        footer {
+            background: #1B5E20;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+    </style>
 </head>
-
 <body>
-
-<header>
-<h2>Smart Local Services</h2>
-<div>
-<button onclick="showUser()">User</button>
-<button onclick="showAdmin()">Admin</button>
-<button onclick="logout()">Logout</button>
-</div>
-</header>
-
-<div class="container">
-
-<!-- LOGIN -->
-<div id="loginSection">
-
-<h3>Login</h3>
-
-<input id="user" placeholder="Username">
-<input id="pass" type="password" placeholder="Password">
-
-<button onclick="login()">Login</button>
-
-</div>
-
-<!-- USER APP -->
-<div id="userSection" class="hidden">
-
-<h3>Find Services</h3>
-
-<input id="search" placeholder="Search service">
-
-<button onclick="searchService()">Search</button>
-
-<button onclick="getLocation()">Detect My Location</button>
-
-<div id="map"></div>
-
-<div id="services"></div>
-
-<hr>
-
-<h3>Add Service Provider</h3>
-
-<input id="pname" placeholder="Provider name">
-<input id="ptype" placeholder="Service">
-<input id="price" placeholder="Price">
-<input type="file" id="photo">
-
-<button onclick="addService()">Add Service</button>
-
-</div>
-
-<!-- ADMIN PANEL -->
-<div id="adminSection" class="hidden">
-
-<h3>Admin Dashboard</h3>
-
-<table>
-
-<tr>
-<th>Name</th>
-<th>Service</th>
-<th>Action</th>
-</tr>
-
-<tbody id="adminTable"></tbody>
-
-</table>
-
-</div>
-
-</div>
-
-<script>
-
-let services=[
-{
-name:"Ravi",
-type:"Electrician",
-price:500,
-rating:5,
-lat:17.385,
-lng:78.486,
-img:"https://via.placeholder.com/300"
-},
-
-{
-name:"Suresh",
-type:"Plumber",
-price:400,
-rating:4,
-lat:12.971,
-lng:77.594,
-img:"https://via.placeholder.com/300"
-}
-
-]
-
-function login(){
-
-let u=document.getElementById("user").value
-let p=document.getElementById("pass").value
-
-if(u==="admin"){
-showAdmin()
-}else{
-showUser()
-}
-
-document.getElementById("loginSection").classList.add("hidden")
-
-}
-
-function logout(){
-
-location.reload()
-
-}
-
-function showUser(){
-
-document.getElementById("userSection").classList.remove("hidden")
-document.getElementById("adminSection").classList.add("hidden")
-
-displayServices()
-
-initMap()
-
-}
-
-function showAdmin(){
-
-document.getElementById("adminSection").classList.remove("hidden")
-document.getElementById("userSection").classList.add("hidden")
-
-loadAdmin()
-
-}
-
-function displayServices(){
-
-let container=document.getElementById("services")
-
-container.innerHTML=""
-
-services.forEach((s,i)=>{
-
-container.innerHTML+=`
-
-<div class="card">
-
-<img src="${s.img}">
-
-<h3>${s.name}</h3>
-
-<p>${s.type}</p>
-
-<p>₹${s.price}</p>
-
-<p class="rating">${"⭐".repeat(s.rating)}</p>
-
-<button onclick="pay(${s.price})">Book & Pay</button>
-
-<button onclick="review(${i})">Review</button>
-
-</div>
-
-`
-
-})
-
-}
-
-function searchService(){
-
-let text=document.getElementById("search").value.toLowerCase()
-
-let filtered=services.filter(s=>
-
-s.type.toLowerCase().includes(text) ||
-s.name.toLowerCase().includes(text)
-
-)
-
-displayFiltered(filtered)
-
-}
-
-function displayFiltered(data){
-
-let container=document.getElementById("services")
-
-container.innerHTML=""
-
-data.forEach((s,i)=>{
-
-container.innerHTML+=`
-
-<div class="card">
-
-<img src="${s.img}">
-
-<h3>${s.name}</h3>
-
-<p>${s.type}</p>
-
-<p>₹${s.price}</p>
-
-<button onclick="pay(${s.price})">Book</button>
-
-</div>
-
-`
-
-})
-
-}
-
-function review(i){
-
-let r=prompt("Give rating 1-5")
-
-services[i].rating=r
-
-displayServices()
-
-}
-
-function pay(amount){
-
-var options={
-
-key:"YOUR_RAZORPAY_KEY",
-
-amount:amount*100,
-
-currency:"INR",
-
-name:"Local Services",
-
-description:"Service Booking",
-
-handler:function(){
-
-alert("Payment Successful")
-
-}
-
-}
-
-var rzp=new Razorpay(options)
-
-rzp.open()
-
-}
-
-function addService(){
-
-let name=document.getElementById("pname").value
-let type=document.getElementById("ptype").value
-let price=document.getElementById("price").value
-let file=document.getElementById("photo").files[0]
-
-let reader=new FileReader()
-
-reader.onload=function(e){
-
-services.push({
-
-name:name,
-type:type,
-price:price,
-rating:3,
-lat:17.0,
-lng:78.0,
-img:e.target.result
-
-})
-
-displayServices()
-
-}
-
-if(file) reader.readAsDataURL(file)
-
-}
-
-function loadAdmin(){
-
-let table=document.getElementById("adminTable")
-
-table.innerHTML=""
-
-services.forEach((s,i)=>{
-
-table.innerHTML+=`
-
-<tr>
-
-<td>${s.name}</td>
-
-<td>${s.type}</td>
-
-<td>
-<button onclick="removeService(${i})">Remove</button>
-</td>
-
-</tr>
-
-`
-
-})
-
-}
-
-function removeService(i){
-
-services.splice(i,1)
-
-loadAdmin()
-
-}
-
-function getLocation(){
-
-navigator.geolocation.getCurrentPosition(pos=>{
-
-alert("Location detected")
-
-})
-
-}
-
-function initMap(){
-
-let center={lat:17.385,lng:78.486}
-
-let map=new google.maps.Map(document.getElementById("map"),{
-
-zoom:5,
-center:center
-
-})
-
-services.forEach(s=>{
-
-new google.maps.Marker({
-
-position:{lat:s.lat,lng:s.lng},
-map:map
-
-})
-
-})
-
-}
-
-</script>
-
+    <!-- Navigation -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <i class="fas fa-leaf"></i> SmartFarmAI
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#how-it-works">How It Works</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1>AI-Powered Farming Solutions</h1>
+            <p class="lead">Empowering farmers with cutting-edge technology for better yield, crop health monitoring, and direct market access</p>
+            <div>
+                <button class="btn btn-light btn-lg cta-button me-3" onclick="alert('Coming Soon: Registration Feature')">
+                    <i class="fas fa-user-plus me-2"></i> Join Now
+                </button>
+                <button class="btn btn-outline-light btn-lg" onclick="alert('To login, connect with your backend')">
+                    <i class="fas fa-sign-in-alt me-2"></i> Login
+                </button>
+            </div>
+            <div class="mt-4">
+                <span class="me-4"><i class="fas fa-check-circle me-2"></i> Free for small farmers</span>
+                <span><i class="fas fa-check-circle me-2"></i> Works offline</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">How Our Platform Helps Farmers</h2>
+            <div class="row g-4">
+                <!-- Crop Recommendation -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-seedling fa-3x feature-icon mb-3"></i>
+                            <h3 class="card-title h5">Smart Crop Recommendation</h3>
+                            <p class="card-text">Get personalized crop suggestions based on soil type, climate conditions, and market demand.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Disease Detection -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-microscope fa-3x feature-icon mb-3"></i>
+                            <h3 class="card-title h5">Disease Detection</h3>
+                            <p class="card-text">Upload crop images to detect diseases early and get treatment recommendations.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weather Prediction -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-cloud-sun fa-3x feature-icon mb-3"></i>
+                            <h3 class="card-title h5">Weather Forecast</h3>
+                            <p class="card-text">Real-time weather forecasts integrated with farming recommendations.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Knowledge Base -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-book fa-3x feature-icon mb-3"></i>
+                            <h3 class="card-title h5">Knowledge Base</h3>
+                            <p class="card-text">Access comprehensive guides and best practices for modern farming.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Marketplace -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-store fa-3x feature-icon mb-3"></i>
+                            <h3 class="card-title h5">Farmers Marketplace</h3>
+                            <p class="card-text">Connect directly with buyers and sellers in the agricultural community.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Offline Support -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-wifi fa-3x feature-icon mb-3"></i>
+                            <h3 class="card-title h5">Works Offline</h3>
+                            <p class="card-text">Access features even without internet connection. Sync when online.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Multi-Language -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-language fa-3x feature-icon mb-3"></i>
+                            <h3 class="card-title h5">Multi-Language</h3>
+                            <p class="card-text">Platform available in multiple languages for global accessibility.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-tachometer-alt fa-3x feature-icon mb-3"></i>
+                            <h3 class="card-title h5">Smart Dashboard</h3>
+                            <p class="card-text">Track your farm metrics and get personalized insights.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">How It Works</h2>
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <div class="rounded-circle bg-success text-white d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 2rem;">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                    </div>
+                    <h4>1. Sign Up</h4>
+                    <p>Create your account with basic farm information</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <div class="rounded-circle bg-success text-white d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 2rem;">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                    </div>
+                    <h4>2. Get AI Recommendations</h4>
+                    <p>Receive personalized suggestions based on your conditions</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <div class="rounded-circle bg-success text-white d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 2rem;">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                    <h4>3. Track & Improve</h4>
+                    <p>Monitor results and improve your farming practices</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5" style="background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%); color: white;">
+        <div class="container text-center">
+            <h2 class="mb-4">Ready to Transform Your Farm?</h2>
+            <p class="lead mb-4">Join thousands of farmers using AI to increase yields and reduce costs</p>
+            <button class="btn btn-light btn-lg cta-button" onclick="alert('Backend integration needed for full functionality')">
+                Get Started Today
+            </button>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5 bg-light">
+        <div class="container text-center">
+            <h2 class="mb-5">Get In Touch</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <i class="fas fa-envelope fa-2x text-success mb-3"></i>
+                    <h5>Email</h5>
+                    <p>support@smartfarmAI.com</p>
+                </div>
+                <div class="col-md-4">
+                    <i class="fas fa-phone fa-2x text-success mb-3"></i>
+                    <h5>Phone</h5>
+                    <p>+1 (555) 123-4567</p>
+                </div>
+                <div class="col-md-4">
+                    <i class="fas fa-map-marker-alt fa-2x text-success mb-3"></i>
+                    <h5>Location</h5>
+                    <p>Global Platform</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p>&copy; 2024 SmartFarmAI. All rights reserved. | Empowering Farmers with Technology</p>
+            <p>Made with <i class="fas fa-heart text-danger"></i> for farmers worldwide</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="static/js/main.js"></script>
 </body>
 </html>
