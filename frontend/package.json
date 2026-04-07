@@ -1,28 +1,17 @@
 {
   "name": "smartfarm-frontend",
   "version": "1.0.0",
-  "description": "SmartFarmAI Frontend - AI-Powered Agricultural Intelligence Platform",
+  "description": "SmartFarmAI Frontend",
   "main": "index.html",
   "scripts": {
     "dev": "http-server",
-    "build": "react-scripts build || echo 'Building static assets'",
-    "start": "react-scripts start || http-server -p 3000",
-    "eject": "react-scripts eject"
+    "build": "echo 'Frontend is static files only'",
+    "start": "http-server -p 3000"
   },
-  "dependencies": {},
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
   "devDependencies": {
     "http-server": "^14.1.1"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   }
 }
