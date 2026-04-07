@@ -24,7 +24,15 @@ def load_user(user_id):
         return None
 
 def create_app():
-    app = Flask(__name__)
+    # Get the backend directory path
+    backend_dir = os.path.dirname(os.path.abspath(__file__))
+    frontend_dir = os.path.join(os.path.dirname(backend_dir), 'frontend')
+    
+    app = Flask(
+        __name__,
+        template_folder=os.path.join(frontend_dir, 'templates'),
+        static_folder=os.path.join(frontend_dir, 'static')
+    )
     app.secret_key = os.environ.get("SESSION_SECRET", "dev-secret-key")  # Add fallback for local dev
 
     # Configure the database

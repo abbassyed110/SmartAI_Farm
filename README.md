@@ -1,199 +1,214 @@
-# SmartFarmAI - AI-Powered Farming Solutions
+# SmartFarmAI - AI-Powered Agricultural Intelligence Platform
 
-A full-stack AI agricultural platform providing crop recommendations, disease detection, weather alerts, and marketplace features for farmers.
+A comprehensive agricultural technology platform powered by machine learning, providing intelligent crop recommendations, disease identification, weather predictions, and a farmers' marketplace.
 
-## Features
-
-- 🌱 **Crop Recommendation** - ML-based crop suggestions based on soil, climate, and weather
-- 🦠 **Disease Detection** - AI-powered plant disease identification with treatment recommendations
-- ⛅ **Weather Alerts** - Real-time weather monitoring and agricultural alerts
-- 🛒 **Marketplace** - Connect with buyers and sellers for agricultural products
-- 📚 **Knowledge Base** - Educational articles on farming best practices
-- 🌍 **Multi-language Support** - English, Hindi, Telugu, Tamil, Marathi, Bengali
-
-## Tech Stack
-
-### Backend
-- **Framework**: Flask 2.x
-- **Database**: SQLAlchemy ORM with SQLite
-- **Authentication**: Flask-Login
-- **API**: RESTful JSON endpoints
-
-### Frontend
-- **UI Framework**: Bootstrap 5
-- **Templates**: Jinja2
-- **Styling**: Custom CSS with green agricultural theme
-- **JavaScript**: Vanilla JS with offline support
-
-### Alternative UI
-- **Streamlit App**: `streamlit_app.py` (lightweight alternative interface)
-
-## Local Development
-
-### Prerequisites
-- Python 3.8+
-- pip package manager
-
-### Setup
-
-1. **Clone repository**
-```bash
-git clone https://github.com/abbassyed110/SmartFarmAI.git
-cd SmartFarmAI
-```
-
-2. **Install dependencies**
-```bash
-pip install -r requirements_streamlit.txt
-```
-
-3. **Run Flask backend** (on port 5000)
-```bash
-python run.py
-```
-
-4. **Access the app**
-- Flask UI: http://127.0.0.1:5000
-- Streamlit UI: http://localhost:8501 (run `streamlit run streamlit_app.py` in separate terminal)
-
-## Deployment
-
-### Deploy Flask Backend (Heroku)
-
-1. Create Heroku app
-2. Add `Procfile`:
-```
-web: gunicorn app:app
-```
-
-3. Deploy:
-```bash
-git push heroku main
-```
-
-### Deploy Streamlit App (Streamlit Cloud)
-
-1. Go to https://streamlit.io/cloud
-2. Click "Deploy an app"
-3. Connect your GitHub account
-4. Select repository: `abbassyed110/SmartFarmAI`
-5. Select branch: `main`
-6. Select file: `streamlit_app.py`
-7. Deploy
-
-**Note**: Update `BACKEND_URL` in `streamlit_app.py` to point to your deployed Flask backend
-
-## Project Structure
+## 📁 Project Structure
 
 ```
 SmartFarmAI/
-├── app.py                 # Flask app factory
-├── routes.py              # Route handlers (800+ lines)
-├── models.py              # SQLAlchemy ORM models
-├── run.py                 # Development server launcher
-├── streamlit_app.py       # Streamlit alternative UI
-├── ml_models/             # ML model modules
-│   ├── crop_recommendation.py
-│   ├── disease_identification.py
-│   └── weather_prediction.py
-├── static/                # Frontend assets
-│   ├── css/
-│   ├── js/
-│   └── img/
-├── templates/             # Jinja2 HTML templates
-├── instance/              # Instance folder (DB, config)
-└── uploads/               # User uploads
-
+├── frontend/                    # React/JavaScript frontend (Vercel)
+│   ├── templates/              # HTML templates
+│   ├── static/                 # CSS, JS, images
+│   │   ├── css/
+│   │   ├── js/
+│   ├── index5.html             # Main entry point
+│   ├── package.json            # Frontend dependencies
+│   ├── vercel.json             # Vercel configuration
+│   └── .gitignore
+│
+├── backend/                     # Flask API (Render)
+│   ├── app.py                  # Flask application factory
+│   ├── run.py                  # Application entry point
+│   ├── routes.py               # API endpoints
+│   ├── models.py               # Database models
+│   ├── utils.py                # Utility functions
+│   ├── config.py               # Configuration settings
+│   ├── ml_models/              # Machine learning models
+│   │   ├── crop_recommendation.py
+│   │   ├── disease_identification.py
+│   │   └── weather_prediction.py
+│   ├── uploads/                # Uploaded files storage
+│   ├── instance/               # Instance configuration
+│   ├── requirements.txt        # Python dependencies
+│   ├── render.yaml             # Render deployment config
+│   ├── .env.example            # Environment variables template
+│   └── .gitignore
+│
+├── DEPLOYMENT.md               # Deployment guide
+└── README.md                   # This file
 ```
 
-## API Endpoints
+## 🚀 Features
+
+- **Crop Recommendation**: AI-powered suggestions based on soil conditions and weather
+- **Disease Detection**: Identify crop diseases using image recognition
+- **Weather Prediction**: Real-time weather forecasts integrated with farming data
+- **Knowledge Base**: Comprehensive agricultural information and best practices
+- **Farmer's Marketplace**: Connect buyers and sellers in the agricultural community
+- **Offline Support**: Works offline with progressive web app capabilities
+- **Multi-language Support**: Support for multiple languages for global accessibility
+
+## 🛠 Tech Stack
+
+### Frontend
+- HTML5
+- CSS3 (with animations)
+- Vanilla JavaScript
+- Progressive Web App (PWA)
+
+### Backend
+- Python 3.14+
+- Flask (Web framework)
+- Flask-SQLAlchemy (ORM)
+- Flask-Login (Authentication)
+- Scikit-learn (ML models)
+- NumPy & Pandas (Data processing)
+
+### Database
+- SQLite (development)
+- PostgreSQL (production)
+
+### Deployment
+- **Frontend**: Vercel
+- **Backend**: Render
+
+## 📋 Prerequisites
+
+- Python 3.8+
+- Node.js 14+ (optional, for frontend development)
+- Git
+- pip and virtualenv
+
+## 🔧 Local Development
+
+### Backend Setup
+
+```bash
+cd backend
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Create .env file
+cp .env.example .env
+
+# Run the application
+python run.py
+```
+
+The backend API will be available at `http://localhost:5000`
+
+### Frontend Setup
+
+```bash
+cd frontend
+
+# Option 1: Using Python built-in server
+python -m http.server 8000
+
+# Option 2: Using Node.js http-server (if installed)
+npm install -g http-server
+http-server
+```
+
+The frontend will be available at `http://localhost:8000`
+
+## 🌐 Environment Variables
+
+Create a `.env` file in the backend folder:
+
+```env
+SESSION_SECRET=your-secret-key-here
+DATABASE_URL=sqlite:///agritech.db
+FLASK_ENV=development
+FLASK_DEBUG=True
+```
+
+For production on Render:
+- `SESSION_SECRET`: Generate a secure random string
+- `DATABASE_URL`: PostgreSQL connection string
+- `FLASK_ENV`: production
+
+## 📦 Deployment
+
+### Deploy to Vercel (Frontend)
+
+1. Go to [vercel.com](https://vercel.com)
+2. Create a new project and connect your GitHub repo
+3. Set root directory to `frontend`
+4. Deploy!
+
+### Deploy to Render (Backend)
+
+1. Go to [render.com](https://render.com)
+2. Create a new Web Service
+3. Connect your GitHub repo
+4. Set root directory to `backend`
+5. Configure the following:
+   - **Build Command**: `pip install -r requirements.txt`
+   - **Start Command**: `gunicorn -w 4 -b 0.0.0.0:$PORT run:app`
+   - **Environment Variables**: See `.env.example`
+
+For detailed deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md)
+
+## 📱 API Endpoints
 
 ### Authentication
-- `POST /register` - Register new user
 - `POST /login` - User login
+- `POST /register` - User registration
 - `GET /logout` - User logout
+- `GET /profile` - Get user profile
 
-### Dashboard
-- `GET /dashboard` - User dashboard with crops, weather, listings
-
-### Crop Recommendation
-- `GET /crop_recommendation` - Form page
-- `POST /crop_recommendation` - Submit recommendation request
-- `POST /add_to_farm_plan` - Save recommended crop to farm plan
-- `POST /api/v1/crop_recommendation` - JSON API
+### Crop Management
+- `POST /crop-recommendation` - Get crop recommendations
+- `GET /crops` - List all crops
 
 ### Disease Detection
-- `GET /disease_detection` - Disease detection page
-- `POST /disease_detection` - Upload image for diagnosis
-- `POST /api/v1/disease_detection` - JSON API
+- `POST /disease-detection` - Upload image for disease detection
+- `GET /diseases` - List known diseases
 
 ### Weather
-- `GET /weather` - Weather page
-- `POST /generate_weather_alerts` - Generate weather alerts
-- `GET /api/v1/weather_alerts` - JSON API
+- `GET /weather` - Get weather data
+- `GET /weather/forecast` - Get weather forecast
 
 ### Marketplace
-- `GET /marketplace` - View listings
-- `POST /add_listing` - Create new listing
+- `GET /marketplace` - List marketplace items
+- `POST /marketplace` - Create listing
+- `PUT /marketplace/<id>` - Update listing
+- `DELETE /marketplace/<id>` - Delete listing
 
-### Profile
-- `GET /profile` - View/edit profile
-- `POST /profile` - Update profile
+### Knowledge Base
+- `GET /knowledge-base` - Get articles
+- `GET /knowledge-base/<id>` - Get article details
 
-## Configuration
+## 🤝 Contributing
 
-### Environment Variables
-```
-SESSION_SECRET=your-secret-key
-DATABASE_URL=sqlite:///agritech.db
-UPLOAD_FOLDER=uploads
-```
+We welcome contributions! Please follow these steps:
 
-### Supported Languages
-- English (en)
-- हिन्दी (hi)
-- తెలుగు (te)
-- தமிழ் (ta)
-- मराठी (mr)
-- বাংলা (bn)
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## Database Models
+## 📄 License
 
-- **User** - Farmer profiles with authentication
-- **FarmerCrop** - Crops planted by users
-- **MarketplaceListing** - Agricultural product listings
-- **WeatherAlert** - Weather notifications
-- **DiseaseDiagnosis** - Disease detection history
-- **CropRecommendation** - Recommendation history
-- **KnowledgeArticle** - Educational content
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Contributing
+## 🆘 Support
 
-1. Fork repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open Pull Request
+For support, email support@smartfarmAI.com or open an issue in the GitHub repository.
 
-## License
+## 📞 Contact
 
-This project is open source and available under the MIT License.
-
-## Author
-
-Abbas Ayed - [GitHub](https://github.com/abbassyed110)
-
-## Support
-
-For issues and questions:
-- GitHub Issues: https://github.com/abbassyed110/SmartFarmAI/issues
-- Email: abbassayed7799@gmail.com
+- **Project Lead**: Abbas Syed
+- **GitHub**: [abbassyed110](https://github.com/abbassyed110)
+- **Repository**: [SmartAI_Farm](https://github.com/abbassyed110/SmartAI_Farm)
 
 ---
 
-**Note**: This is currently a development version. For production deployment, ensure:
-- Database is backed up
-- SSL certificates are installed
-- Environment variables are properly configured
-- Rate limiting is implemented
-- Input validation is enhanced
+Made with ❤️ for farmers worldwide

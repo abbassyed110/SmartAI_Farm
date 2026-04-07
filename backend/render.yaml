@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: smartfarm-backend
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -w 4 -b 0.0.0.0:$PORT run:app
+    envVars:
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        value: "sqlite:///agritech.db"
+      - key: FLASK_ENV
+        value: "production"
