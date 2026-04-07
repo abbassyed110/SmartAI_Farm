@@ -3,140 +3,592 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartFarmAI - AI-Powered Agricultural Intelligence</title>
+    <title>SmartFarmAI - AI-Powered Agricultural Intelligence Platform</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="static/css/style.css">
     <link rel="stylesheet" href="static/css/animations.css">
     <style>
         * {
-            --primary-green: #1B5E20;
-            --secondary-green: #2E7D32;
-            --light-green: #4CAF50;
-            --dark-green: #0D3817;
-            --accent-purple: #9C27B0;
+            --primary-green: #10B981;
+            --secondary-green: #059669;
+            --dark-green: #047857;
+            --light-green: #A7F3D0;
+            --accent-blue: #3B82F6;
+            --accent-purple: #8B5CF6;
+            --accent-orange: #F59E0B;
+            --dark-bg: #0F172A;
+            --light-bg: #F8FAFC;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f5f5;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0fdf4 0%, #f0f9ff 100%);
+            min-height: 100vh;
+            color: #1e293b;
         }
 
+        h1, h2, h3, h4, h5 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+        }
+
+        /* Header Styling */
         header {
-            background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 50%, var(--accent-blue) 100%);
             color: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 1.2rem 0;
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .navbar-brand {
-            font-weight: bold;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: 800;
             color: white !important;
+            letter-spacing: -0.5px;
+            animation: fadeInScale 0.8s ease-out;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .nav-link {
-            color: white !important;
-            transition: opacity 0.3s ease;
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            margin: 0 0.25rem;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 2px;
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
         }
 
         .nav-link:hover {
-            opacity: 0.8;
+            background: rgba(255, 255, 255, 0.1);
+            color: white !important;
         }
 
+        .nav-link:hover::after {
+            width: 80%;
+        }
+
+        /* Page Transitions */
         .page {
             display: none;
             min-height: calc(100vh - 200px);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .page.active {
             display: block;
         }
 
+        /* Hero Section */
         .hero-section {
-            background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 50%, var(--accent-blue) 100%);
             color: white;
-            padding: 5rem 0;
-            text-align: center;
+            padding: 7rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+            pointer-events: none;
         }
 
         .hero-section h1 {
-            font-size: 3rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+            line-height: 1.2;
+            letter-spacing: -1px;
         }
 
-        .feature-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: none;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        .hero-section .lead {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
         }
 
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        .hero-buttons {
+            animation: fadeInUp 0.8s ease-out 0.6s both;
         }
 
-        .feature-icon {
-            color: var(--primary-green);
-            margin-bottom: 1rem;
-        }
-
-        .cta-button {
-            background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
-            border: none;
-            padding: 0.75rem 2rem;
+        /* Buttons */
+        .btn {
             font-weight: 600;
-            transition: transform 0.3s ease;
-            color: white !important;
-            text-decoration: none;
+            padding: 0.75rem 1.75rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            overflow: hidden;
         }
 
-        .cta-button:hover {
-            transform: scale(1.05);
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+            border: none;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(59, 130, 246, 0.4);
             color: white;
         }
 
+        .btn-light {
+            background: white;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-light:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            background: #f8fafc;
+        }
+
+        .btn-lg {
+            font-size: 1.1rem;
+            padding: 1rem 2.5rem;
+            border-radius: 10px;
+        }
+
+        /* Feature Cards */
+        .feature-card {
+            background: white;
+            border: none;
+            border-radius: 16px;
+            padding: 2rem;
+            height: 100%;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-green), var(--accent-blue), var(--accent-purple));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-green), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+            animation: bounce 0.6s ease-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .feature-card h5 {
+            color: var(--dark-bg);
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+
+        .feature-card p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        /* Dashboard Cards */
         .dashboard-card {
             background: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 1.5rem;
+            border: none;
+            border-radius: 14px;
+            padding: 2rem;
             margin-bottom: 1.5rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .dashboard-card:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            transform: translateY(-2px);
         }
 
         .dashboard-stat {
             text-align: center;
-            padding: 1rem;
+            padding: 1.5rem;
         }
 
         .dashboard-stat .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary-green);
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-green), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: countUp 0.8s ease-out;
+        }
+
+        @keyframes countUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .dashboard-stat .stat-label {
-            color: #666;
-            font-size: 0.9rem;
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+            font-weight: 500;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
-            border: none;
+        /* Form Elements */
+        .form-control, .form-select {
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
         }
 
-        .btn-primary:hover {
-            background: linear-gradient(135deg, var(--secondary-green) 0%, var(--primary-green) 100%);
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 0.3rem rgba(16, 185, 129, 0.1);
+            transform: translateY(-2px);
         }
 
-        footer {
-            background: var(--primary-green);
-            color: white;
-            padding: 2rem 0;
-            margin-top: 3rem;
+        label {
+            font-weight: 600;
+            color: var(--dark-bg);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Upload Area */
+        .upload-area {
+            border: 3px dashed var(--primary-green);
+            border-radius: 12px;
+            padding: 3rem;
             text-align: center;
+            cursor: pointer;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(59, 130, 246, 0.05));
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-area::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .upload-area:hover {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1));
+            border-color: var(--accent-blue);
+            transform: scale(1.02);
+        }
+
+        .upload-area:hover::before {
+            opacity: 1;
+        }
+
+        .upload-area i {
+            font-size: 3.5rem;
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* product Card */
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            height: 100%;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--light-green), rgba(16, 185, 129, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-green);
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translate(-100%, -100%) rotate(0deg); }
+            100% { transform: translate(100%, 100%) rotate(360deg); }
+        }
+
+        .product-body {
+            padding: 1.5rem;
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-green), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Article Card */
+        .article-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid var(--accent-purple);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            animation: fadeInLeft 0.6s ease-out;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .article-card:hover {
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            transform: translateX(5px);
+            border-left-color: var(--accent-blue);
+        }
+
+        .article-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark-bg);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .article-title:hover {
+            color: var(--primary-green);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-green) 100%);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 4rem;
+            text-align: center;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+        }
+
+        footer p:hover {
+            opacity: 1;
+        }
+
+        /* Loading Animation */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(16, 185, 129, 0.2);
+            border-top-color: var(--primary-green);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.2rem;
+            }
+            .feature-card {
+                padding: 1.5rem;
+            }
+            .dashboard-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Badge Animations */
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-green), var(--accent-blue));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
     </style>
 </head>
@@ -148,17 +600,17 @@
                 <a class="navbar-brand" href="#" onclick="navigateTo('home')">
                     <i class="fas fa-leaf"></i> SmartFarmAI
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3);">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="#" onclick="navigateTo('dashboard')"><i class="fas fa-tachometer-alt me-1"></i> Dashboard</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#" onclick="navigateTo('crop')"><i class="fas fa-seedling me-1"></i> Crop</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#" onclick="navigateTo('disease')"><i class="fas fa-microscope me-1"></i> Disease</a></li>
+                    <ul class="navbar-nav ms-auto gap-2">
+                        <li class="nav-item"><a class="nav-link" href="#" onclick="navigateTo('dashboard')"><i class="fas fa-chart-line me-1"></i> Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" onclick="navigateTo('crop')"><i class="fas fa-leaf me-1"></i> Crop</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" onclick="navigateTo('disease')"><i class="fas fa-virus me-1"></i> Disease</a></li>
                         <li class="nav-item"><a class="nav-link" href="#" onclick="navigateTo('weather')"><i class="fas fa-cloud me-1"></i> Weather</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#" onclick="navigateTo('marketplace')"><i class="fas fa-store me-1"></i> Marketplace</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#" onclick="navigateTo('knowledge')"><i class="fas fa-book me-1"></i> Knowledge</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" onclick="navigateTo('marketplace')"><i class="fas fa-shop me-1"></i> Market</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" onclick="navigateTo('knowledge')"><i class="fas fa-book me-1"></i> Learn</a></li>
                     </ul>
                 </div>
             </div>
@@ -166,54 +618,53 @@
     </header>
 
     <!-- Main Content -->
-    <div class="container my-4">
+    <div class="container my-5">
         <!-- Home Page -->
         <div id="page-home" class="page active">
-            <section class="hero-section mb-5">
-                <h1>AI-Powered Farming Solutions</h1>
-                <p class="lead mb-4">Smart recommendations, disease detection & market access</p>
-                <button class="btn btn-light btn-lg cta-button me-3" onclick="navigateTo('dashboard')">
-                    <i class="fas fa-tachometer-alt me-2"></i> Dashboard
-                </button>
+            <section class="hero-section mb-5 rounded-4">
+                <div class="container">
+                    <h1><i class="fas fa-tractor me-3"></i>AI-Powered Farming Solutions</h1>
+                    <p class="lead">🌾 Smart recommendations • 🔍 Disease detection • 📊 Market insights</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-light btn-lg me-3" onclick="navigateTo('dashboard')"><i class="fas fa-play me-2"></i>Get Started</button>
+                        <button class="btn btn-primary btn-lg" onclick="navigateTo('knowledge')"><i class="fas fa-graduation-cap me-2"></i>Learn More</button>
+                    </div>
+                </div>
             </section>
 
             <section class="py-5">
-                <h2 class="text-center mb-5">Features</h2>
+                <h2 class="text-center mb-5" style="font-size: 2.5rem; color: var(--dark-bg);">✨ Platform Features</h2>
                 <div class="row g-4">
                     <div class="col-md-6 col-lg-3">
-                        <div class="card feature-card">
-                            <div class="card-body text-center">
-                                <i class="fas fa-seedling fa-3x feature-icon mb-3"></i>
-                                <h5>Crop Recommendation</h5>
-                                <p>AI-powered crop suggestions based on your soil</p>
-                            </div>
+                        <div class="feature-card">
+                            <i class="fas fa-seedling feature-icon"></i>
+                            <h5>Smart Crop Recommendation</h5>
+                            <p>AI analyzes soil conditions to recommend the best crops for maximum yield</p>
+                            <span class="badge">AI Powered</span>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-3">
-                        <div class="card feature-card">
-                            <div class="card-body text-center">
-                                <i class="fas fa-microscope fa-3x feature-icon mb-3"></i>
-                                <h5>Disease Detection</h5>
-                                <p>Detect crop diseases with image analysis</p>
-                            </div>
+                        <div class="feature-card">
+                            <i class="fas fa-microscope feature-icon"></i>
+                            <h5>Disease Detection</h5>
+                            <p>Upload crop images to identify diseases and get instant treatment advice</p>
+                            <span class="badge">Image Analysis</span>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-3">
-                        <div class="card feature-card">
-                            <div class="card-body text-center">
-                                <i class="fas fa-cloud-sun fa-3x feature-icon mb-3"></i>
-                                <h5>Weather Forecast</h5>
-                                <p>Real-time weather integrated with farming tips</p>
-                            </div>
+                        <div class="feature-card">
+                            <i class="fas fa-cloud-rain feature-icon"></i>
+                            <h5>Weather Forecast</h5>
+                            <p>Real-time weather data with farming tips for optimal crop management</p>
+                            <span class="badge">Live Data</span>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-3">
-                        <div class="card feature-card">
-                            <div class="card-body text-center">
-                                <i class="fas fa-book fa-3x feature-icon mb-3"></i>
-                                <h5>Knowledge Base</h5>
-                                <p>Learn modern farming techniques & best practices</p>
-                            </div>
+                        <div class="feature-card">
+                            <i class="fas fa-book feature-icon"></i>
+                            <h5>Knowledge Base</h5>
+                            <p>Comprehensive guides and best practices from agricultural experts</p>
+                            <span class="badge">Expert Tips</span>
                         </div>
                     </div>
                 </div>
@@ -222,214 +673,249 @@
 
         <!-- Dashboard Page -->
         <div id="page-dashboard" class="page">
-            <h2 class="mb-4"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</h2>
+            <h2 class="mb-5" style="font-size: 2.2rem; color: var(--dark-bg);"><i class="fas fa-chart-line me-3"></i>Dashboard</h2>
             
-            <div class="row mb-4">
-                <div class="col-md-3"><div class="dashboard-card"><div class="dashboard-stat"><div class="stat-number">5</div><div class="stat-label">Active Crops</div></div></div></div>
-                <div class="col-md-3"><div class="dashboard-card"><div class="dashboard-stat"><div class="stat-number">92%</div><div class="stat-label">Soil Health</div></div></div></div>
-                <div class="col-md-3"><div class="dashboard-card"><div class="dashboard-stat"><div class="stat-number">28°C</div><div class="stat-label">Temp</div></div></div></div>
-                <div class="col-md-3"><div class="dashboard-card"><div class="dashboard-stat"><div class="stat-number">0</div><div class="stat-label">Alerts</div></div></div></div>
+            <div class="row mb-4 g-4">
+                <div class="col-md-3">
+                    <div class="dashboard-card text-center">
+                        <i class="fas fa-leaf" style="font-size: 2.5rem; color: var(--primary-green); margin-bottom: 1rem;"></i>
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">Active Crops</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="dashboard-card text-center">
+                        <i class="fas fa-heart-pulse" style="font-size: 2.5rem; color: var(--accent-purple); margin-bottom: 1rem;"></i>
+                        <div class="stat-number">92%</div>
+                        <div class="stat-label">Farm Health</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="dashboard-card text-center">
+                        <i class="fas fa-thermometer" style="font-size: 2.5rem; color: var(--accent-orange); margin-bottom: 1rem;"></i>
+                        <div class="stat-number">28°C</div>
+                        <div class="stat-label">Temperature</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="dashboard-card text-center">
+                        <i class="fas fa-bell" style="font-size: 2.5rem; color: var(--accent-blue); margin-bottom: 1rem;"></i>
+                        <div class="stat-number">0</div>
+                        <div class="stat-label">Alerts</div>
+                    </div>
+                </div>
             </div>
 
             <div class="row">
                 <div class="col-md-6">
                     <div class="dashboard-card">
-                        <h5>Active Crops</h5>
-                        <p><strong>Rice</strong> - Growing (85%)</p>
-                        <p><strong>Wheat</strong> - Planned (70%)</p>
-                        <p><strong>Corn</strong> - Harvested</p>
+                        <h5><i class="fas fa-cloud me-2"></i>Weather Widget</h5>
+                        <hr>
+                        <p style="font-size: 1.3rem;"><span style="font-weight: 800; color: var(--accent-orange);">28°C</span> - Partly Cloudy</p>
+                        <p><i class="fas fa-wind me-2"></i>Wind: 5 km/h | <i class="fas fa-droplet me-2"></i>Humidity: 65%</p>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="dashboard-card">
-                        <h5>Weather Today</h5>
-                        <p><strong>28°C</strong> - Partly Cloudy</p>
-                        <p>Wind: 5 km/h | Humidity: 65%</p>
+                        <h5><i class="fas fa-crop me-2"></i>Crop Status</h5>
+                        <hr>
+                        <p><span class="badge" style="background: linear-gradient(135deg, #10B981, #8B5CF6);">Rice - Growing 85%</span></p>
+                        <p class="mt-2"><span class="badge" style="background: linear-gradient(135deg, #F59E0B, #8B5CF6);">Wheat - Planned 70%</span></p>
+                        <p class="mt-2"><span class="badge" style="background: linear-gradient(135deg, #3B82F6, #8B5CF6);">Corn - Harvested</span></p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Crop Recommendation Page -->
+        <!-- Crop Recommendation -->
         <div id="page-crop" class="page">
-            <h2 class="mb-4"><i class="fas fa-seedling me-2"></i> Crop Recommendation</h2>
-            
+            <h2 class="mb-5"><i class="fas fa-leaf me-3"></i>Smart Crop Recommendation</h2>
             <div class="row">
                 <div class="col-md-6">
                     <div class="dashboard-card">
-                        <h5>Soil Parameters</h5>
+                        <h5><i class="fas fa-flask-vial me-2"></i>Soil Analysis</h5>
+                        <hr>
                         <form onsubmit="getCropRec(event)">
-                            <div class="mb-3"><label class="form-label">Nitrogen (mg/kg)</label><input type="number" id="n" class="form-control" required></div>
-                            <div class="mb-3"><label class="form-label">Phosphorus (mg/kg)</label><input type="number" id="p" class="form-control" required></div>
-                            <div class="mb-3"><label class="form-label">Potassium (mg/kg)</label><input type="number" id="k" class="form-control" required></div>
-                            <div class="mb-3"><label class="form-label">pH</label><input type="number" id="ph" class="form-control" step="0.1" required></div>
-                            <div class="mb-3"><label class="form-label">Temperature (°C)</label><input type="number" id="temp" class="form-control" required></div>
-                            <button type="submit" class="btn btn-primary w-100">Get Recommendations</button>
+                            <div class="mb-3"><label>Nitrogen (mg/kg)</label><input type="number" id="n" class="form-control" required></div>
+                            <div class="mb-3"><label>Phosphorus (mg/kg)</label><input type="number" id="p" class="form-control" required></div>
+                            <div class="mb-3"><label>Potassium (mg/kg)</label><input type="number" id="k" class="form-control" required></div>
+                            <div class="mb-3"><label>pH Level</label><input type="number" id="ph" class="form-control" step="0.1" required></div>
+                            <div class="mb-3"><label>Temperature (°C)</label><input type="number" id="temp" class="form-control" required></div>
+                            <button type="submit" class="btn btn-primary w-100"><i class="fas fa-magic me-2"></i>Analyze & Recommend</button>
                         </form>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="dashboard-card">
-                        <h5 id="rec-title">Recommended Crops</h5>
-                        <div id="crops-rec"><p class="text-muted">Fill the form to get recommendations</p></div>
+                        <h5><i class="fas fa-star me-2"></i>Top Recommendations</h5>
+                        <hr>
+                        <div id="crops-rec"><p class="text-muted text-center" style="padding: 2rem 0;"><i class="fas fa-arrow-left me-2"></i>Fill soil parameters →</p></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Disease Detection Page -->
+        <!-- Disease Detection -->
         <div id="page-disease" class="page">
-            <h2 class="mb-4"><i class="fas fa-microscope me-2"></i> Disease Detection</h2>
-            
+            <h2 class="mb-5"><i class="fas fa-virus me-3"></i>Disease Detection</h2>
             <div class="row">
                 <div class="col-md-6">
                     <div class="dashboard-card">
-                        <h5>Upload Image</h5>
-                        <div class="border border-2 border-dashed p-5 text-center cursor-pointer" id="dropzone">
-                            <i class="fas fa-cloud-upload-alt fa-3x text-muted mb-3"></i>
-                            <p>Drag or click to upload</p>
-                            <input type="file" id="img-upload" accept="image/*" style="display:none" onchange="showImage()">
+                        <h5><i class="fas fa-camera me-2"></i>Upload Crop Image</h5>
+                        <div class="upload-area mt-4" id="dropzone">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p class="mt-3">Drag & drop or click to upload</p>
+                            <input type="file" id="img-upload" accept="image/*" style="display:none;" onchange="showImage()">
                         </div>
-                        <div id="img-preview" class="mt-3"></div>
+                        <div id="img-preview" class="mt-4"></div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="dashboard-card">
-                        <h5>Results</h5>
-                        <div id="disease-results"><p class="text-muted">Upload image to see results</p></div>
+                        <h5><i class="fas fa-stethoscope me-2"></i>Diagnosis Results</h5>
+                        <div id="disease-results"><p class="text-muted text-center" style="padding: 2rem 0;"><i class="fas fa-image me-2"></i>Upload image to analyze</p></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Weather Page -->
+        <!-- Weather -->
         <div id="page-weather" class="page">
-            <h2 class="mb-4"><i class="fas fa-cloud-sun me-2"></i> Weather</h2>
-            
-            <div class="row">
+            <h2 class="mb-5"><i class="fas fa-cloud me-3"></i>Weather Forecast</h2>
+            <div class="row g-4">
                 <div class="col-md-3">
-                    <div class="dashboard-card">
-                        <h5>Today</h5>
-                        <h6>28°C</h6>
+                    <div class="dashboard-card text-center">
+                        <h6>Today</h6>
+                        <i class="fas fa-sun" style="font-size: 3rem; color: var(--accent-orange); margin: 1rem 0;"></i>
+                        <p style="font-size: 1.8rem; font-weight: 800; color: var(--accent-orange);">28°C</p>
                         <p>Partly Cloudy</p>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="dashboard-card">
-                        <h5>Tomorrow</h5>
-                        <h6>26°C</h6>
+                    <div class="dashboard-card text-center">
+                        <h6>Tomorrow</h6>
+                        <i class="fas fa-cloud-rain" style="font-size: 3rem; color: var(--accent-blue); margin: 1rem 0;"></i>
+                        <p style="font-size: 1.8rem; font-weight: 800; color: var(--accent-blue);">26°C</p>
                         <p>Rainy</p>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="dashboard-card">
-                        <h5>Day After</h5>
-                        <h6>30°C</h6>
+                    <div class="dashboard-card text-center">
+                        <h6>Day After</h6>
+                        <i class="fas fa-sun" style="font-size: 3rem; color: var(--primary-green); margin: 1rem 0;"></i>
+                        <p style="font-size: 1.8rem; font-weight: 800; color: var(--primary-green);">30°C</p>
                         <p>Sunny</p>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="dashboard-card">
-                        <h5>Next Week</h5>
-                        <h6>25°C</h6>
+                    <div class="dashboard-card text-center">
+                        <h6>Next Week</h6>
+                        <i class="fas fa-cloud" style="font-size: 3rem; color: #64748b; margin: 1rem 0;"></i>
+                        <p style="font-size: 1.8rem; font-weight: 800;color: #64748b;">25°C</p>
                         <p>Cloudy</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Marketplace Page -->
+        <!-- Marketplace -->
         <div id="page-marketplace" class="page">
-            <h2 class="mb-4"><i class="fas fa-store me-2"></i> Marketplace</h2>
-            
+            <h2 class="mb-5"><i class="fas fa-shop me-3"></i>Farmers Marketplace</h2>
             <div class="row g-4">
                 <div class="col-md-4">
-                    <div class="card">
-                        <div class="bg-light p-5 text-center"><i class="fas fa-apple-alt fa-5x text-muted"></i></div>
-                        <div class="card-body">
-                            <h5>Organic Rice</h5>
-                            <p class="text-muted">Best quality rice</p>
-                            <p><strong>₹450/kg</strong></p>
-                            <button class="btn btn-primary btn-sm w-100">Request Quote</button>
+                    <div class="product-card">
+                        <div class="product-image"><i class="fas fa-wheat-awn"></i></div>
+                        <div class="product-body">
+                            <h6 class="mt-2">Organic Rice</h6>
+                            <p class="text-muted small">Premium quality rice</p>
+                            <p class="product-price">₹450/kg</p>
+                            <button class="btn btn-primary btn-sm w-100"><i class="fas fa-quote-left me-2"></i>Quote</button>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card">
-                        <div class="bg-light p-5 text-center"><i class="fas fa-leaf fa-5x text-muted"></i></div>
-                        <div class="card-body">
-                            <h5>Vegetables</h5>
-                            <p class="text-muted">Fresh harvested</p>
-                            <p><strong>₹200/bundle</strong></p>
-                            <button class="btn btn-primary btn-sm w-100">Request Quote</button>
+                    <div class="product-card">
+                        <div class="product-image"><i class="fas fa-leaf"></i></div>
+                        <div class="product-body">
+                            <h6 class="mt-2">Fresh Vegetables</h6>
+                            <p class="text-muted small">Daily harvested</p>
+                            <p class="product-price">₹200/bundle</p>
+                            <button class="btn btn-primary btn-sm w-100"><i class="fas fa-quote-left me-2"></i>Quote</button>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card">
-                        <div class="bg-light p-5 text-center"><i class="fas fa-wheat-awn fa-5x text-muted"></i></div>
-                        <div class="card-body">
-                            <h5>Wheat</h5>
-                            <p class="text-muted">Premium quality</p>
-                            <p><strong>₹400/kg</strong></p>
-                            <button class="btn btn-primary btn-sm w-100">Request Quote</button>
+                    <div class="product-card">
+                        <div class="product-image"><i class="fas fa-apple-alt"></i></div>
+                        <div class="product-body">
+                            <h6 class="mt-2">Wheat Grain</h6>
+                            <p class="text-muted small">Premium quality</p>
+                            <p class="product-price">₹400/kg</p>
+                            <button class="btn btn-primary btn-sm w-100"><i class="fas fa-quote-left me-2"></i>Quote</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Knowledge Base Page -->
+        <!-- Knowledge Base -->
         <div id="page-knowledge" class="page">
-            <h2 class="mb-4"><i class="fas fa-book me-2"></i> Knowledge Base</h2>
-            
-            <div class="list-group">
-                <div class="list-group-item">
-                    <h5>Modern Irrigation Techniques</h5>
-                    <p class="text-muted mb-0">Learn sustainable irrigation methods</p>
-                </div>
-                <div class="list-group-item">
-                    <h5>Soil Health Management</h5>
-                    <p class="text-muted mb-0">Maintain soil for better crops</p>
-                </div>
-                <div class="list-group-item">
-                    <h5>Pest Management</h5>
-                    <p class="text-muted mb-0">Organic pest control methods</p>
-                </div>
-                <div class="list-group-item">
-                    <h5>Seasonal Crop Planning</h5>
-                    <p class="text-muted mb-0">Plan crops for maximum yield</p>
-                </div>
+            <h2 class="mb-5"><i class="fas fa-book me-3"></i>Knowledge Base</h2>
+            <div class="article-card">
+                <h5 class="article-title"><i class="fas fa-play-circle me-2"></i>Modern Irrigation Techniques</h5>
+                <p class="text-muted mt-2">Learn sustainable irrigation methods to conserve water</p>
+            </div>
+            <div class="article-card">
+                <h5 class="article-title"><i class="fas fa-play-circle me-2"></i>Soil Health Management</h5>
+                <p class="text-muted mt-2">Comprehensive guide to maintaining soil fertility</p>
+            </div>
+            <div class="article-card">
+                <h5 class="article-title"><i class="fas fa-play-circle me-2"></i>Organic Pest Control</h5>
+                <p class="text-muted mt-2">Effective organic methods to manage pests naturally</p>
+            </div>
+            <div class="article-card">
+                <h5 class="article-title"><i class="fas fa-play-circle me-2"></i>Seasonal Crop Planning</h5>
+                <p class="text-muted mt-2">Plan your crops strategically for maximum profit</p>
             </div>
         </div>
     </div>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 SmartFarmAI | Empowering Farmers</p>
+        <div class="container">
+            <h5 class="mb-3">SmartFarmAI</h5>
+            <p>&copy; 2024 SmartFarmAI | AI-Powered Agriculture Platform</p>
+            <p>Made with <i class="fas fa-heart" style="color: #ef4444;"></i> for farmers worldwide 🌾</p>
+        </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function navigateTo(page) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            const el = document.getElementById(`page-${page}`);
-            if (el) el.classList.add('active');
+            document.getElementById(`page-${page}`)?.classList.add('active');
+            window.scrollTo(0, 0);
         }
 
         function getCropRec(e) {
             e.preventDefault();
-            const n = document.getElementById('n').value;
-            const p = document.getElementById('p').value;
             document.getElementById('crops-rec').innerHTML = `
-                <p><strong>Rice</strong> - 95% Match ✓</p>
-                <p><strong>Wheat</strong> - 87% Match ✓</p>
-                <p><strong>Corn</strong> - 78% Match ✓</p>
+                <div style="animation: fadeInUp 0.6s ease-out;">
+                    <p><strong>🌾 Rice</strong><span class="badge float-end" style="background: linear-gradient(135deg, #10B981, #8B5CF6); color: white;">95% Match</span></p><hr>
+                    <p><strong>🌽 Wheat</strong><span class="badge float-end" style="background: linear-gradient(135deg, #10B981, #8B5CF6); color: white;">87% Match</span></p><hr>
+                    <p><strong>🔶 Corn</strong><span class="badge float-end" style="background: linear-gradient(135deg, #10B981, #8B5CF6); color: white;">78% Match</span></p>
+                </div>
             `;
         }
 
         document.getElementById('dropzone')?.addEventListener('click', () => document.getElementById('img-upload').click());
-        document.getElementById('dropzone')?.addEventListener('drag over', e => e.preventDefault());
+        document.getElementById('dropzone')?.addEventListener('dragover', e => {
+            e.preventDefault();
+            document.getElementById('dropzone').style.background = 'linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(59, 130, 246, 0.2))';
+        });
+        document.getElementById('dropzone')?.addEventListener('dragleave', () => {
+            document.getElementById('dropzone').style.background = '';
+        });
         document.getElementById('dropzone')?.addEventListener('drop', e => {
             e.preventDefault();
             document.getElementById('img-upload').files = e.dataTransfer.files;
@@ -441,8 +927,16 @@
             if (file) {
                 const reader = new FileReader();
                 reader.onload = e => {
-                    document.getElementById('img-preview').innerHTML = `<img src="${e.target.result}" class="img-fluid rounded" style="max-height:300px;">`;
-                    document.getElementById('disease-results').innerHTML = `<div class="alert alert-info"><h6>Leaf Spot Detected (89% confidence)</h6><p>Treatment: Apply fungicide</p></div>`;
+                    document.getElementById('img-preview').innerHTML = `<img src="${e.target.result}" class="img-fluid rounded" style="max-height:300px; animation: fadeInUp 0.6s ease-out;">`;
+                    document.getElementById('disease-results').innerHTML = `
+                        <div class="alert alert-success" style="animation: fadeInUp 0.6s ease-out;">
+                            <h6><i class="fas fa-check-circle me-2"></i>Analysis Complete!</h6>
+                            <p><strong>Disease:</strong> Leaf Spot</p>
+                            <p><strong>Confidence:</strong> 89%</p>
+                            <p><strong>Severity:</strong> Moderate</p>
+                            <p><strong>Treatment:</strong> Apply fungicide spray</p>
+                        </div>
+                    `;
                 };
                 reader.readAsDataURL(file);
             }
