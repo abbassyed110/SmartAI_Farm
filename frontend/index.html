@@ -9,63 +9,134 @@
     <link rel="stylesheet" href="static/css/style.css">
     <link rel="stylesheet" href="static/css/animations.css">
     <style>
+        * {
+            --primary-green: #1B5E20;
+            --secondary-green: #2E7D32;
+            --light-green: #4CAF50;
+            --dark-green: #0D3817;
+            --accent-purple: #9C27B0;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
         }
+
         header {
-            background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
             color: white;
             padding: 1rem 0;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
+
         .navbar-brand {
             font-weight: bold;
             font-size: 1.5rem;
+            color: white !important;
         }
+
+        .nav-link {
+            color: white !important;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-link:hover {
+            opacity: 0.8;
+        }
+
+        .page {
+            display: none;
+            min-height: calc(100vh - 200px);
+        }
+
+        .page.active {
+            display: block;
+        }
+
         .hero-section {
-            background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
             color: white;
             padding: 5rem 0;
             text-align: center;
         }
+
         .hero-section h1 {
             font-size: 3rem;
             font-weight: bold;
             margin-bottom: 1rem;
         }
-        .hero-section p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-        }
+
         .feature-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border: none;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
+
         .feature-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 16px rgba(0,0,0,0.15);
         }
+
         .feature-icon {
-            color: #1B5E20;
+            color: var(--primary-green);
             margin-bottom: 1rem;
         }
+
         .cta-button {
-            background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
             border: none;
             padding: 0.75rem 2rem;
             font-weight: 600;
             transition: transform 0.3s ease;
+            color: white !important;
+            text-decoration: none;
         }
+
         .cta-button:hover {
             transform: scale(1.05);
             color: white;
         }
+
+        .dashboard-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .dashboard-stat {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .dashboard-stat .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-green);
+        }
+
+        .dashboard-stat .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--secondary-green) 0%, var(--primary-green) 100%);
+        }
+
         footer {
-            background: #1B5E20;
+            background: var(--primary-green);
             color: white;
             padding: 2rem 0;
             margin-top: 3rem;
+            text-align: center;
         }
     </style>
 </head>
@@ -74,7 +145,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container">
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="#" onclick="navigateTo('home')">
                     <i class="fas fa-leaf"></i> SmartFarmAI
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -82,211 +153,303 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#how-it-works">How It Works</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" onclick="navigateTo('dashboard')"><i class="fas fa-tachometer-alt me-1"></i> Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" onclick="navigateTo('crop')"><i class="fas fa-seedling me-1"></i> Crop</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" onclick="navigateTo('disease')"><i class="fas fa-microscope me-1"></i> Disease</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" onclick="navigateTo('weather')"><i class="fas fa-cloud me-1"></i> Weather</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" onclick="navigateTo('marketplace')"><i class="fas fa-store me-1"></i> Marketplace</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" onclick="navigateTo('knowledge')"><i class="fas fa-book me-1"></i> Knowledge</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container">
-            <h1>AI-Powered Farming Solutions</h1>
-            <p class="lead">Empowering farmers with cutting-edge technology for better yield, crop health monitoring, and direct market access</p>
-            <div>
-                <button class="btn btn-light btn-lg cta-button me-3" onclick="alert('Coming Soon: Registration Feature')">
-                    <i class="fas fa-user-plus me-2"></i> Join Now
+    <!-- Main Content -->
+    <div class="container my-4">
+        <!-- Home Page -->
+        <div id="page-home" class="page active">
+            <section class="hero-section mb-5">
+                <h1>AI-Powered Farming Solutions</h1>
+                <p class="lead mb-4">Smart recommendations, disease detection & market access</p>
+                <button class="btn btn-light btn-lg cta-button me-3" onclick="navigateTo('dashboard')">
+                    <i class="fas fa-tachometer-alt me-2"></i> Dashboard
                 </button>
-                <button class="btn btn-outline-light btn-lg" onclick="alert('To login, connect with your backend')">
-                    <i class="fas fa-sign-in-alt me-2"></i> Login
-                </button>
-            </div>
-            <div class="mt-4">
-                <span class="me-4"><i class="fas fa-check-circle me-2"></i> Free for small farmers</span>
-                <span><i class="fas fa-check-circle me-2"></i> Works offline</span>
-            </div>
+            </section>
+
+            <section class="py-5">
+                <h2 class="text-center mb-5">Features</h2>
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card feature-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-seedling fa-3x feature-icon mb-3"></i>
+                                <h5>Crop Recommendation</h5>
+                                <p>AI-powered crop suggestions based on your soil</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card feature-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-microscope fa-3x feature-icon mb-3"></i>
+                                <h5>Disease Detection</h5>
+                                <p>Detect crop diseases with image analysis</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card feature-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-cloud-sun fa-3x feature-icon mb-3"></i>
+                                <h5>Weather Forecast</h5>
+                                <p>Real-time weather integrated with farming tips</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card feature-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-book fa-3x feature-icon mb-3"></i>
+                                <h5>Knowledge Base</h5>
+                                <p>Learn modern farming techniques & best practices</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-    </section>
 
-    <!-- Features Section -->
-    <section id="features" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5">How Our Platform Helps Farmers</h2>
-            <div class="row g-4">
-                <!-- Crop Recommendation -->
-                <div class="col-md-6 col-lg-3">
-                    <div class="card feature-card h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-seedling fa-3x feature-icon mb-3"></i>
-                            <h3 class="card-title h5">Smart Crop Recommendation</h3>
-                            <p class="card-text">Get personalized crop suggestions based on soil type, climate conditions, and market demand.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Disease Detection -->
-                <div class="col-md-6 col-lg-3">
-                    <div class="card feature-card h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-microscope fa-3x feature-icon mb-3"></i>
-                            <h3 class="card-title h5">Disease Detection</h3>
-                            <p class="card-text">Upload crop images to detect diseases early and get treatment recommendations.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Weather Prediction -->
-                <div class="col-md-6 col-lg-3">
-                    <div class="card feature-card h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-cloud-sun fa-3x feature-icon mb-3"></i>
-                            <h3 class="card-title h5">Weather Forecast</h3>
-                            <p class="card-text">Real-time weather forecasts integrated with farming recommendations.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Knowledge Base -->
-                <div class="col-md-6 col-lg-3">
-                    <div class="card feature-card h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-book fa-3x feature-icon mb-3"></i>
-                            <h3 class="card-title h5">Knowledge Base</h3>
-                            <p class="card-text">Access comprehensive guides and best practices for modern farming.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Marketplace -->
-                <div class="col-md-6 col-lg-3">
-                    <div class="card feature-card h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-store fa-3x feature-icon mb-3"></i>
-                            <h3 class="card-title h5">Farmers Marketplace</h3>
-                            <p class="card-text">Connect directly with buyers and sellers in the agricultural community.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Offline Support -->
-                <div class="col-md-6 col-lg-3">
-                    <div class="card feature-card h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-wifi fa-3x feature-icon mb-3"></i>
-                            <h3 class="card-title h5">Works Offline</h3>
-                            <p class="card-text">Access features even without internet connection. Sync when online.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Multi-Language -->
-                <div class="col-md-6 col-lg-3">
-                    <div class="card feature-card h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-language fa-3x feature-icon mb-3"></i>
-                            <h3 class="card-title h5">Multi-Language</h3>
-                            <p class="card-text">Platform available in multiple languages for global accessibility.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Dashboard -->
-                <div class="col-md-6 col-lg-3">
-                    <div class="card feature-card h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-tachometer-alt fa-3x feature-icon mb-3"></i>
-                            <h3 class="card-title h5">Smart Dashboard</h3>
-                            <p class="card-text">Track your farm metrics and get personalized insights.</p>
-                        </div>
-                    </div>
-                </div>
+        <!-- Dashboard Page -->
+        <div id="page-dashboard" class="page">
+            <h2 class="mb-4"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</h2>
+            
+            <div class="row mb-4">
+                <div class="col-md-3"><div class="dashboard-card"><div class="dashboard-stat"><div class="stat-number">5</div><div class="stat-label">Active Crops</div></div></div></div>
+                <div class="col-md-3"><div class="dashboard-card"><div class="dashboard-stat"><div class="stat-number">92%</div><div class="stat-label">Soil Health</div></div></div></div>
+                <div class="col-md-3"><div class="dashboard-card"><div class="dashboard-stat"><div class="stat-number">28°C</div><div class="stat-label">Temp</div></div></div></div>
+                <div class="col-md-3"><div class="dashboard-card"><div class="dashboard-stat"><div class="stat-number">0</div><div class="stat-label">Alerts</div></div></div></div>
             </div>
-        </div>
-    </section>
 
-    <!-- How It Works Section -->
-    <section id="how-it-works" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-5">How It Works</h2>
-            <div class="row text-center">
-                <div class="col-md-4">
-                    <div class="mb-3">
-                        <div class="rounded-circle bg-success text-white d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 2rem;">
-                            <i class="fas fa-user-plus"></i>
-                        </div>
-                    </div>
-                    <h4>1. Sign Up</h4>
-                    <p>Create your account with basic farm information</p>
-                </div>
-                <div class="col-md-4">
-                    <div class="mb-3">
-                        <div class="rounded-circle bg-success text-white d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 2rem;">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                    </div>
-                    <h4>2. Get AI Recommendations</h4>
-                    <p>Receive personalized suggestions based on your conditions</p>
-                </div>
-                <div class="col-md-4">
-                    <div class="mb-3">
-                        <div class="rounded-circle bg-success text-white d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 2rem;">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                    </div>
-                    <h4>3. Track & Improve</h4>
-                    <p>Monitor results and improve your farming practices</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="py-5" style="background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%); color: white;">
-        <div class="container text-center">
-            <h2 class="mb-4">Ready to Transform Your Farm?</h2>
-            <p class="lead mb-4">Join thousands of farmers using AI to increase yields and reduce costs</p>
-            <button class="btn btn-light btn-lg cta-button" onclick="alert('Backend integration needed for full functionality')">
-                Get Started Today
-            </button>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-5 bg-light">
-        <div class="container text-center">
-            <h2 class="mb-5">Get In Touch</h2>
             <div class="row">
-                <div class="col-md-4">
-                    <i class="fas fa-envelope fa-2x text-success mb-3"></i>
-                    <h5>Email</h5>
-                    <p>support@smartfarmAI.com</p>
+                <div class="col-md-6">
+                    <div class="dashboard-card">
+                        <h5>Active Crops</h5>
+                        <p><strong>Rice</strong> - Growing (85%)</p>
+                        <p><strong>Wheat</strong> - Planned (70%)</p>
+                        <p><strong>Corn</strong> - Harvested</p>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <i class="fas fa-phone fa-2x text-success mb-3"></i>
-                    <h5>Phone</h5>
-                    <p>+1 (555) 123-4567</p>
-                </div>
-                <div class="col-md-4">
-                    <i class="fas fa-map-marker-alt fa-2x text-success mb-3"></i>
-                    <h5>Location</h5>
-                    <p>Global Platform</p>
+                <div class="col-md-6">
+                    <div class="dashboard-card">
+                        <h5>Weather Today</h5>
+                        <p><strong>28°C</strong> - Partly Cloudy</p>
+                        <p>Wind: 5 km/h | Humidity: 65%</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+
+        <!-- Crop Recommendation Page -->
+        <div id="page-crop" class="page">
+            <h2 class="mb-4"><i class="fas fa-seedling me-2"></i> Crop Recommendation</h2>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="dashboard-card">
+                        <h5>Soil Parameters</h5>
+                        <form onsubmit="getCropRec(event)">
+                            <div class="mb-3"><label class="form-label">Nitrogen (mg/kg)</label><input type="number" id="n" class="form-control" required></div>
+                            <div class="mb-3"><label class="form-label">Phosphorus (mg/kg)</label><input type="number" id="p" class="form-control" required></div>
+                            <div class="mb-3"><label class="form-label">Potassium (mg/kg)</label><input type="number" id="k" class="form-control" required></div>
+                            <div class="mb-3"><label class="form-label">pH</label><input type="number" id="ph" class="form-control" step="0.1" required></div>
+                            <div class="mb-3"><label class="form-label">Temperature (°C)</label><input type="number" id="temp" class="form-control" required></div>
+                            <button type="submit" class="btn btn-primary w-100">Get Recommendations</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="dashboard-card">
+                        <h5 id="rec-title">Recommended Crops</h5>
+                        <div id="crops-rec"><p class="text-muted">Fill the form to get recommendations</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Disease Detection Page -->
+        <div id="page-disease" class="page">
+            <h2 class="mb-4"><i class="fas fa-microscope me-2"></i> Disease Detection</h2>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="dashboard-card">
+                        <h5>Upload Image</h5>
+                        <div class="border border-2 border-dashed p-5 text-center cursor-pointer" id="dropzone">
+                            <i class="fas fa-cloud-upload-alt fa-3x text-muted mb-3"></i>
+                            <p>Drag or click to upload</p>
+                            <input type="file" id="img-upload" accept="image/*" style="display:none" onchange="showImage()">
+                        </div>
+                        <div id="img-preview" class="mt-3"></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="dashboard-card">
+                        <h5>Results</h5>
+                        <div id="disease-results"><p class="text-muted">Upload image to see results</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Weather Page -->
+        <div id="page-weather" class="page">
+            <h2 class="mb-4"><i class="fas fa-cloud-sun me-2"></i> Weather</h2>
+            
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="dashboard-card">
+                        <h5>Today</h5>
+                        <h6>28°C</h6>
+                        <p>Partly Cloudy</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="dashboard-card">
+                        <h5>Tomorrow</h5>
+                        <h6>26°C</h6>
+                        <p>Rainy</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="dashboard-card">
+                        <h5>Day After</h5>
+                        <h6>30°C</h6>
+                        <p>Sunny</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="dashboard-card">
+                        <h5>Next Week</h5>
+                        <h6>25°C</h6>
+                        <p>Cloudy</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Marketplace Page -->
+        <div id="page-marketplace" class="page">
+            <h2 class="mb-4"><i class="fas fa-store me-2"></i> Marketplace</h2>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="bg-light p-5 text-center"><i class="fas fa-apple-alt fa-5x text-muted"></i></div>
+                        <div class="card-body">
+                            <h5>Organic Rice</h5>
+                            <p class="text-muted">Best quality rice</p>
+                            <p><strong>₹450/kg</strong></p>
+                            <button class="btn btn-primary btn-sm w-100">Request Quote</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="bg-light p-5 text-center"><i class="fas fa-leaf fa-5x text-muted"></i></div>
+                        <div class="card-body">
+                            <h5>Vegetables</h5>
+                            <p class="text-muted">Fresh harvested</p>
+                            <p><strong>₹200/bundle</strong></p>
+                            <button class="btn btn-primary btn-sm w-100">Request Quote</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="bg-light p-5 text-center"><i class="fas fa-wheat-awn fa-5x text-muted"></i></div>
+                        <div class="card-body">
+                            <h5>Wheat</h5>
+                            <p class="text-muted">Premium quality</p>
+                            <p><strong>₹400/kg</strong></p>
+                            <button class="btn btn-primary btn-sm w-100">Request Quote</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Knowledge Base Page -->
+        <div id="page-knowledge" class="page">
+            <h2 class="mb-4"><i class="fas fa-book me-2"></i> Knowledge Base</h2>
+            
+            <div class="list-group">
+                <div class="list-group-item">
+                    <h5>Modern Irrigation Techniques</h5>
+                    <p class="text-muted mb-0">Learn sustainable irrigation methods</p>
+                </div>
+                <div class="list-group-item">
+                    <h5>Soil Health Management</h5>
+                    <p class="text-muted mb-0">Maintain soil for better crops</p>
+                </div>
+                <div class="list-group-item">
+                    <h5>Pest Management</h5>
+                    <p class="text-muted mb-0">Organic pest control methods</p>
+                </div>
+                <div class="list-group-item">
+                    <h5>Seasonal Crop Planning</h5>
+                    <p class="text-muted mb-0">Plan crops for maximum yield</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer>
-        <div class="container text-center">
-            <p>&copy; 2024 SmartFarmAI. All rights reserved. | Empowering Farmers with Technology</p>
-            <p>Made with <i class="fas fa-heart text-danger"></i> for farmers worldwide</p>
-        </div>
+        <p>&copy; 2024 SmartFarmAI | Empowering Farmers</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function navigateTo(page) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const el = document.getElementById(`page-${page}`);
+            if (el) el.classList.add('active');
+        }
+
+        function getCropRec(e) {
+            e.preventDefault();
+            const n = document.getElementById('n').value;
+            const p = document.getElementById('p').value;
+            document.getElementById('crops-rec').innerHTML = `
+                <p><strong>Rice</strong> - 95% Match ✓</p>
+                <p><strong>Wheat</strong> - 87% Match ✓</p>
+                <p><strong>Corn</strong> - 78% Match ✓</p>
+            `;
+        }
+
+        document.getElementById('dropzone')?.addEventListener('click', () => document.getElementById('img-upload').click());
+        document.getElementById('dropzone')?.addEventListener('drag over', e => e.preventDefault());
+        document.getElementById('dropzone')?.addEventListener('drop', e => {
+            e.preventDefault();
+            document.getElementById('img-upload').files = e.dataTransfer.files;
+            showImage();
+        });
+
+        function showImage() {
+            const file = document.getElementById('img-upload').files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    document.getElementById('img-preview').innerHTML = `<img src="${e.target.result}" class="img-fluid rounded" style="max-height:300px;">`;
+                    document.getElementById('disease-results').innerHTML = `<div class="alert alert-info"><h6>Leaf Spot Detected (89% confidence)</h6><p>Treatment: Apply fungicide</p></div>`;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        navigateTo('home');
+    </script>
     <script src="static/js/main.js"></script>
 </body>
 </html>
