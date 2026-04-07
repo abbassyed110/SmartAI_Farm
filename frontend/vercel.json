@@ -2,17 +2,5 @@
   "buildCommand": "",
   "outputDirectory": ".",
   "installCommand": "",
-  "framework": null,
-  "cleanUrls": false,
-  "trailingSlash": false,
-  "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ]
+  "framework": null
 }
